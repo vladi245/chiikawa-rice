@@ -14,11 +14,23 @@ say() { printf 'chiikawa: %s\n' "$*"; }
 backup=$(cat "$state_dir/last-backup" 2>/dev/null || true)
 [ -n "$backup" ] && [ -d "$backup" ] || { say "no install backup found in $state_dir"; exit 1; }
 
-noctalia-shell kill >/dev/null 2>&1 || true
-for _ in $(seq 1 25); do
-  noctalia-shell ipc call wallpaper get all >/dev/null 2>&1 || break
-  sleep 0.2
-done
+noctalia_pids() { timeout 5 noctalia-shell list 2>/dev/null | sed -n 's/^ *Process ID: //p'; }
+# Ask Noctalia to quit, then escalate: a shell can hang while tearing down.
+stop_noctalia() {
+  pids=$(noctalia_pids)
+  [ -n "$pids" ] || return 0
+  timeout 5 noctalia-shell kill >/dev/null 2>&1 || true
+  for sig in TERM KILL; do
+    for _ in $(seq 1 25); do
+      alive=
+      for pid in $pids; do kill -0 "$pid" 2>/dev/null && alive=1; done
+      [ -n "$alive" ] || return 0
+      sleep 0.2
+    done
+    kill -s "$sig" $pids 2>/dev/null || true
+  done
+}
+stop_noctalia
 
 for name in settings.json plugins.json; do
   [ -f "$backup/$name" ] && cp -p "$backup/$name" "$noctalia_dir/$name"
@@ -57,7 +69,7 @@ if [ -f "$backup/dolphin-color-scheme" ] && command -v kwriteconfig6 >/dev/null 
 fi
 
 if [ -n "${WAYLAND_DISPLAY:-}" ]; then
-  noctalia-shell -d >/dev/null 2>&1 < /dev/null
+  setsid -f noctalia-shell -d >/dev/null 2>&1 < /dev/null
 fi
 rm -f "$state_dir/last-backup"
 say "removed; your configs from $backup are back (pick your old wallpaper in Noctalia)"

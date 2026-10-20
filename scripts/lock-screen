@@ -7,7 +7,7 @@ root=$(dirname "$script_dir")
 cache_dir=${XDG_CACHE_HOME:-"$HOME/.cache"}/chiikawa-lock
 
 screen=$(niri msg --json focused-output 2>/dev/null | jq -r '.name // empty' || true)
-wallpaper=$(noctalia-shell ipc call wallpaper get "${screen:-all}" 2>/dev/null || true)
+wallpaper=$(timeout 3 noctalia-shell ipc call wallpaper get "${screen:-all}" 2>/dev/null || true)
 [ -n "$wallpaper" ] && [ -f "$wallpaper" ] || wallpaper="$root/wallpaper/chiikawa.jpg"
 
 mkdir -p "$cache_dir"
