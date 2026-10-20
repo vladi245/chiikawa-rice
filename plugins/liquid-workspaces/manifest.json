@@ -1,0 +1,18 @@
+{
+  "id": "liquid-workspaces",
+  "name": "Liquid Workspaces",
+  "version": "1.0.0",
+  "minNoctaliaVersion": "4.0.0",
+  "author": "vlad",
+  "description": "Workspace dots with a stretchy liquid indicator, glow and click ripples.",
+  "tags": [
+    "Bar",
+    "Workspaces"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "metadata": {
+    "defaultSettings": {}
+  }
+}

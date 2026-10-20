@@ -1,0 +1,18 @@
+{
+  "id": "liquid-battery",
+  "name": "Liquid Battery",
+  "version": "1.0.0",
+  "minNoctaliaVersion": "4.0.0",
+  "author": "vlad",
+  "description": "Battery cell with a rolling liquid surface, charging bubbles and a low-power pulse.",
+  "tags": [
+    "Bar",
+    "System"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "metadata": {
+    "defaultSettings": {}
+  }
+}

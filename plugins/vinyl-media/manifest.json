@@ -1,0 +1,18 @@
+{
+  "id": "vinyl-media",
+  "name": "Vinyl Media",
+  "version": "1.0.0",
+  "minNoctaliaVersion": "4.0.0",
+  "author": "vlad",
+  "description": "Spinning album-art vinyl with a live spectrum behind a fading marquee.",
+  "tags": [
+    "Bar",
+    "Media"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "metadata": {
+    "defaultSettings": {}
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "id": "pulse-monitor",
+  "name": "Pulse Monitor",
+  "version": "1.0.0",
+  "minNoctaliaVersion": "4.0.0",
+  "author": "vlad",
+  "description": "CPU, memory and temperature as matching icon + value readouts with hairline meters, heat flicker and critical glow.",
+  "tags": [
+    "Bar",
+    "System"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "metadata": {
+    "defaultSettings": {}
+  }
+}

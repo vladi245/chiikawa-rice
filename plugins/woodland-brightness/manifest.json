@@ -1,0 +1,14 @@
+{
+  "id": "woodland-brightness",
+  "name": "Woodland Brightness",
+  "version": "1.0.0",
+  "minNoctaliaVersion": "4.0.0",
+  "author": "vlad",
+  "description": "Brightness button whose rays grow with the level, and a woodland panel with per-display sliders and night light.",
+  "tags": ["Bar", "Display"],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml",
+    "panel": "Panel.qml"
+  },
+  "metadata": { "defaultSettings": {} }
+}

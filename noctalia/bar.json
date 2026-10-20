@@ -1,0 +1,92 @@
+{
+  "bar": {
+    "barType": "floating",
+    "position": "top",
+    "density": "comfortable",
+    "backgroundOpacity": 0.94,
+    "contentPadding": 6,
+    "fontScale": 0.95,
+    "marginHorizontal": 14,
+    "marginVertical": 8,
+    "outerCorners": false,
+    "showCapsule": false,
+    "showOutline": true,
+    "widgetSpacing": 10
+  },
+  "layout": {
+    "left": [
+      "plugin:chiikawa-launcher",
+      "plugin:pulse-monitor",
+      "plugin:liquid-workspaces",
+      "ActiveWindow"
+    ],
+    "center": [
+      "plugin:woodland-calendar"
+    ],
+    "right": [
+      "plugin:vinyl-media",
+      "Tray",
+      "plugin:woodland-notifications",
+      "plugin:liquid-battery",
+      "plugin:woodland-volume",
+      "plugin:woodland-brightness",
+      "plugin:woodland-bluetooth",
+      "plugin:woodland-network",
+      "plugin:chiikawa-cast",
+      "plugin:woodland-control"
+    ]
+  },
+  "widgetDefaults": {
+    "ActiveWindow": {
+      "id": "ActiveWindow"
+    },
+    "Tray": {
+      "id": "Tray"
+    },
+    "plugin:liquid-workspaces": {
+      "id": "plugin:liquid-workspaces"
+    },
+    "plugin:vinyl-media": {
+      "id": "plugin:vinyl-media"
+    },
+    "plugin:liquid-battery": {
+      "id": "plugin:liquid-battery"
+    },
+    "plugin:woodland-volume": {
+      "id": "plugin:woodland-volume"
+    },
+    "plugin:woodland-brightness": {
+      "id": "plugin:woodland-brightness"
+    },
+    "plugin:woodland-network": {
+      "id": "plugin:woodland-network"
+    },
+    "plugin:woodland-bluetooth": {
+      "id": "plugin:woodland-bluetooth"
+    },
+    "plugin:woodland-notifications": {
+      "id": "plugin:woodland-notifications"
+    },
+    "plugin:woodland-control": {
+      "id": "plugin:woodland-control"
+    },
+    "plugin:woodland-calendar": {
+      "id": "plugin:woodland-calendar"
+    },
+    "plugin:pulse-monitor": {
+      "id": "plugin:pulse-monitor"
+    },
+    "plugin:chiikawa-launcher": {
+      "id": "plugin:chiikawa-launcher"
+    },
+    "plugin:chiikawa-cast": {
+      "id": "plugin:chiikawa-cast"
+    }
+  },
+  "widgetOverrides": {
+    "ActiveWindow": {
+      "showIcon": true,
+      "maxWidth": 160
+    }
+  }
+}

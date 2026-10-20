@@ -1,0 +1,42 @@
+#!/bin/sh
+# WOODLAND_LOCK_PREVIEW=1 opens a preview window instead of locking.
+set -eu
+
+script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+root=$(dirname "$script_dir")
+config_home=${XDG_CONFIG_HOME:-"$HOME/.config"}
+cache_dir=${XDG_CACHE_HOME:-"$HOME/.cache"}/chiikawa-lock
+
+screen=$(niri msg --json focused-output 2>/dev/null | jq -r '.name // empty' || true)
+wallpaper=$(noctalia-shell ipc call wallpaper get "${screen:-all}" 2>/dev/null || true)
+[ -n "$wallpaper" ] && [ -f "$wallpaper" ] || wallpaper="$root/wallpaper/chiikawa.jpg"
+
+mkdir -p "$cache_dir"
+cached="$cache_dir/background.jpg"
+sharp="$cache_dir/background-sharp.jpg"
+if [ ! -f "$cached" ] || [ ! -f "$sharp" ] || [ "$wallpaper" -nt "$cached" ]; then
+  tmp=$(mktemp "$cache_dir/.background.XXXXXX.jpg")
+  tmp_sharp=$(mktemp "$cache_dir/.sharp.XXXXXX.jpg")
+  trap 'rm -f "$tmp" "$tmp_sharp"' EXIT HUP INT TERM
+  magick "$wallpaper" -resize '1920x1200^' -gravity center -extent 1920x1200 \
+    -quality 88 "$tmp_sharp"
+  magick "$tmp_sharp" -blur 0x24 -quality 82 "$tmp"
+  mv -f "$tmp" "$cached"
+  mv -f "$tmp_sharp" "$sharp"
+  trap - EXIT HUP INT TERM
+fi
+export WOODLAND_LOCK_BG="file://$cached"
+export WOODLAND_LOCK_SHARP="file://$sharp"
+
+palette="$config_home/noctalia/colors.json"
+WOODLAND_LOCK_FG=$(jq -r '.mOnSurface // "#4b302b"' "$palette" 2>/dev/null || printf '#4b302b')
+WOODLAND_LOCK_DIM=$(jq -r '.mOnSurfaceVariant // "#9c8273"' "$palette" 2>/dev/null || printf '#9c8273')
+export WOODLAND_LOCK_FG WOODLAND_LOCK_DIM WOODLAND_LOCK_ACCENT='#e3708b'
+
+# Loaded by file URL from outside Quickshell's config folder, so its relative
+# import of ../theme/figures resolves.
+export WOODLAND_LOCK_VIEW="file://$root/lockscreen/ChiikawaLockView.qml"
+
+# A second invocation must not create a competing session lock.
+exec flock -n "${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/chiikawa-lock.lock" \
+  quickshell --path "$root/lockscreen/shell/shell.qml"

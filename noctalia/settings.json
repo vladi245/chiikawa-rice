@@ -1,0 +1,19 @@
+{
+  "colorSchemes": {
+    "darkMode": false,
+    "generationMethod": "tonal-spot"
+  },
+  "general": {
+    "radiusRatio": 1.6,
+    "iRadiusRatio": 1.6,
+    "boxRadiusRatio": 1.5,
+    "screenRadiusRatio": 1.5,
+    "shadowOffsetX": 4,
+    "shadowOffsetY": 5
+  },
+  "ui": {
+    "fontDefault": "Nunito",
+    "fontFixed": "Maple Mono NF",
+    "panelBackgroundOpacity": 0.97
+  }
+}

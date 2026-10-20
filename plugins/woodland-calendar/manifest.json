@@ -1,0 +1,14 @@
+{
+  "id": "woodland-calendar",
+  "name": "Woodland Calendar",
+  "version": "1.0.0",
+  "minNoctaliaVersion": "4.0.0",
+  "author": "vlad",
+  "description": "Plain bar clock (same as stock) that opens a woodland calendar: daylight arc, moon phase, month grid with events and agenda, weather forecast.",
+  "tags": ["Bar", "Clock", "Calendar"],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml",
+    "panel": "Panel.qml"
+  },
+  "metadata": { "defaultSettings": {} }
+}

@@ -1,0 +1,15 @@
+singleton Woodland 1.0 Woodland.qml
+Scene 1.0 Scene.qml
+WPanel 1.0 WPanel.qml
+Header 1.0 Header.qml
+WToggle 1.0 WToggle.qml
+WSlider 1.0 WSlider.qml
+WRow 1.0 WRow.qml
+WButton 1.0 WButton.qml
+BarGlyph 1.0 BarGlyph.qml
+Details 1.0 Details.qml
+Passphrase 1.0 Passphrase.qml
+Mochi 1.0 Mochi.qml
+VolumeHero 1.0 VolumeHero.qml
+Friend 1.0 Friend.qml
+CastFile 1.0 CastFile.qml

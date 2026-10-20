@@ -1,0 +1,80 @@
+layer-rule {
+    match namespace="^woodland-backdrop"
+    place-within-backdrop true
+}
+
+layout {
+    gaps 18
+
+    focus-ring {
+        width 3
+        active-gradient from="#f2a0b4" to="#79a9d1" angle=135
+        inactive-color "#e6d8bf"
+        urgent-color "#d65a5a"
+    }
+
+    border {
+        off
+    }
+
+    shadow {
+        on
+        softness 18
+        spread 2
+        offset x=5 y=7
+        color "#4b302b2e"
+    }
+}
+
+overview {
+    zoom 0.5
+    backdrop-color "#fcf6e7"
+    workspace-shadow {
+        softness 24
+        spread 4
+        offset x=6 y=10
+        color "#4b302b40"
+    }
+}
+
+animations {
+    window-open {
+        spring damping-ratio=0.62 stiffness=520 epsilon=0.0001
+    }
+    window-close {
+        duration-ms 160
+        curve "ease-out-quad"
+    }
+    window-movement {
+        spring damping-ratio=0.7 stiffness=640 epsilon=0.0001
+    }
+    window-resize {
+        spring damping-ratio=0.72 stiffness=620 epsilon=0.0001
+    }
+    workspace-switch {
+        spring damping-ratio=0.82 stiffness=900 epsilon=0.0001
+    }
+    horizontal-view-movement {
+        spring damping-ratio=0.78 stiffness=760 epsilon=0.0001
+    }
+    overview-open-close {
+        spring damping-ratio=0.75 stiffness=700 epsilon=0.0001
+    }
+}
+
+window-rule {
+    opacity 0.96
+    draw-border-with-background false
+    geometry-corner-radius 22
+    clip-to-geometry true
+}
+
+window-rule {
+    match is-active=true
+    opacity 1.0
+}
+
+window-rule {
+    match app-id=r#"(?i)^spotify$"#
+    opacity 1.0
+}

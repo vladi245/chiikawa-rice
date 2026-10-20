@@ -1,0 +1,21 @@
+{
+  "id": "chiikawa-launcher",
+  "name": "Chiikawa Launcher",
+  "version": "1.0.0",
+  "minNoctaliaVersion": "4.0.0",
+  "author": "vlad",
+  "description": "Centered app launcher on a picnic of cream paper and grass: a friend peeks from the search field, the selection bounces between rows, apps ranked by how often you launch them. Its bar button is the NixOS logo with hearts circling it.",
+  "tags": [
+    "Bar",
+    "Launcher"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml",
+    "panel": "Panel.qml"
+  },
+  "metadata": {
+    "defaultSettings": {
+      "launches": {}
+    }
+  }
+}
