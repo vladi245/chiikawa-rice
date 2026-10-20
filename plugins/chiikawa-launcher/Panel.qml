@@ -13,12 +13,12 @@ Item {
   readonly property bool allowAttach: false
   readonly property bool panelAnchorHorizontalCenter: true
   readonly property bool panelAnchorVerticalCenter: true
-  readonly property color panelBackgroundColor: Woodland.night
-  readonly property real contentPreferredWidth: Woodland.size(560)
-  readonly property real contentPreferredHeight: Woodland.size(540)
+  readonly property color panelBackgroundColor: Theme.paper
+  readonly property real contentPreferredWidth: Theme.size(560)
+  readonly property real contentPreferredHeight: Theme.size(540)
 
-  readonly property int iconSize: Woodland.size(30)
-  readonly property int rowHeight: Woodland.size(50)
+  readonly property int iconSize: Theme.size(30)
+  readonly property int rowHeight: Theme.size(50)
 
   readonly property var launches: pluginApi?.pluginSettings?.launches ?? ({})
   readonly property var apps: {
@@ -121,7 +121,7 @@ Item {
   Timer {
     id: launchTimer
     property var app: null
-    interval: Woodland.fx ? 320 : 0
+    interval: Theme.fx ? 320 : 0
     onTriggered: {
       const target = app;
       root.launching = false;
@@ -143,53 +143,53 @@ Item {
   Item {
     id: content
     anchors.fill: parent
-    anchors.margins: Woodland.size(22)
+    anchors.margins: Theme.size(22)
 
     Rectangle {
       id: searchRow
       width: parent.width
-      height: Woodland.size(50)
+      height: Theme.size(50)
       radius: height / 2
-      color: Woodland.white
+      color: Theme.white
       border.width: 2
-      border.color: input.text ? Woodland.windowLight : Woodland.line
+      border.color: input.text ? Theme.pink : Theme.line
       Behavior on border.color {
         ColorAnimation { duration: 200 }
       }
 
       Friend {
         id: peek
-        width: Woodland.size(40)
+        width: Theme.size(40)
         anchors.left: parent.left
-        anchors.leftMargin: Woodland.size(8)
+        anchors.leftMargin: Theme.size(8)
         anchors.verticalCenter: parent.verticalCenter
-        anchors.verticalCenterOffset: Woodland.size(1)
+        anchors.verticalCenterOffset: Theme.size(1)
         kind: root.who
         role: root.launching ? "happy" : ""
         mood: root.mood
-        animated: Woodland.fx
+        animated: Theme.fx
       }
 
       TextInput {
         id: input
         anchors.left: peek.right
-        anchors.leftMargin: Woodland.size(10)
+        anchors.leftMargin: Theme.size(10)
         anchors.right: count.left
-        anchors.rightMargin: Woodland.size(10)
+        anchors.rightMargin: Theme.size(10)
         anchors.verticalCenter: parent.verticalCenter
-        font.family: Woodland.display
+        font.family: Theme.display
         font.pointSize: 15
         font.weight: Font.Bold
-        color: Woodland.mist
-        selectionColor: Woodland.blush
-        selectedTextColor: Woodland.line
+        color: Theme.ink
+        selectionColor: Theme.blush
+        selectedTextColor: Theme.line
         focus: true
         cursorDelegate: Rectangle {
           width: 2
           radius: 1
-          color: Woodland.windowLight
+          color: Theme.pink
           SequentialAnimation on opacity {
-            running: Woodland.fx
+            running: Theme.fx
             loops: Animation.Infinite
             NumberAnimation { to: 0.2; duration: 500; easing.type: Easing.InOutSine }
             NumberAnimation { to: 1; duration: 500; easing.type: Easing.InOutSine }
@@ -206,32 +206,32 @@ Item {
           anchors.verticalCenter: parent.verticalCenter
           visible: !input.text
           text: "what shall we do today?"
-          font.family: Woodland.display
+          font.family: Theme.display
           font.pointSize: input.font.pointSize
           font.weight: Font.DemiBold
-          color: Woodland.bark
+          color: Theme.inkFaint
         }
       }
 
       Rectangle {
         id: count
         anchors.right: parent.right
-        anchors.rightMargin: Woodland.size(10)
+        anchors.rightMargin: Theme.size(10)
         anchors.verticalCenter: parent.verticalCenter
-        width: Math.max(height, countText.implicitWidth + Woodland.size(14))
-        height: Woodland.size(26)
+        width: Math.max(height, countText.implicitWidth + Theme.size(14))
+        height: Theme.size(26)
         radius: height / 2
-        color: Woodland.blush
+        color: Theme.blush
         border.width: 1.5
-        border.color: Woodland.line
+        border.color: Theme.line
         Text {
           id: countText
           anchors.centerIn: parent
           text: root.results.length
-          font.family: Woodland.font
+          font.family: Theme.font
           font.pointSize: 8.5
           font.weight: Font.Bold
-          color: Woodland.line
+          color: Theme.line
         }
       }
     }
@@ -239,37 +239,37 @@ Item {
     Item {
       id: resultsArea
       anchors.top: searchRow.bottom
-      anchors.topMargin: Woodland.size(14)
+      anchors.topMargin: Theme.size(14)
       anchors.bottom: footer.top
-      anchors.bottomMargin: Woodland.size(8)
+      anchors.bottomMargin: Theme.size(8)
       width: parent.width
       clip: true
 
       Rectangle {
         id: sticker
         property real contentPos: list.currentItem ? list.currentItem.y : 0
-        x: Woodland.size(2)
-        width: list.width - Woodland.size(4)
+        x: Theme.size(2)
+        width: list.width - Theme.size(4)
         height: root.rowHeight
         y: contentPos - list.contentY
         visible: list.count > 0
         radius: height / 2
-        color: Qt.alpha(Woodland.blush, 0.75)
+        color: Qt.alpha(Theme.blush, 0.75)
         border.width: 2
-        border.color: Woodland.line
+        border.color: Theme.line
         Behavior on contentPos {
-          enabled: Woodland.fx
+          enabled: Theme.fx
           SpringAnimation { spring: 4.5; damping: 0.32; epsilon: 0.25 }
         }
 
         Text {
           anchors.right: parent.right
-          anchors.rightMargin: Woodland.size(16)
+          anchors.rightMargin: Theme.size(16)
           anchors.verticalCenter: parent.verticalCenter
           text: "⏎"
-          font.family: Woodland.font
+          font.family: Theme.font
           font.pointSize: 11
-          color: Woodland.line
+          color: Theme.line
           opacity: 0.6
         }
       }
@@ -278,7 +278,7 @@ Item {
         id: list
         anchors.fill: parent
         model: root.results
-        spacing: Woodland.size(4)
+        spacing: Theme.size(4)
         currentIndex: 0
         reserveScrollbarSpace: false
         horizontalPolicy: ScrollBar.AlwaysOff
@@ -299,11 +299,11 @@ Item {
           Connections {
             target: root
             function onResultsRevisionChanged() {
-              if (Woodland.fx && row.index < 10)
+              if (Theme.fx && row.index < 10)
                 enter.restart();
             }
           }
-          Component.onCompleted: if (Woodland.fx && index < 10)
+          Component.onCompleted: if (Theme.fx && index < 10)
                                    enter.start()
 
           SequentialAnimation {
@@ -327,7 +327,7 @@ Item {
             Image {
               id: icon
               anchors.left: parent.left
-              anchors.leftMargin: Woodland.size(18)
+              anchors.leftMargin: Theme.size(18)
               anchors.verticalCenter: parent.verticalCenter
               width: root.iconSize
               height: width
@@ -344,24 +344,24 @@ Item {
               anchors.fill: icon
               visible: rowContent.iconSource === ""
               radius: width / 2
-              color: Woodland.usagi
+              color: Theme.usagi
               border.width: 1.5
-              border.color: Woodland.line
+              border.color: Theme.line
               Text {
                 anchors.centerIn: parent
                 text: (row.modelData.name || "?").charAt(0).toUpperCase()
-                font.family: Woodland.display
+                font.family: Theme.display
                 font.pointSize: 12
                 font.weight: Font.Black
-                color: Woodland.line
+                color: Theme.line
               }
             }
 
             Column {
               anchors.left: icon.right
-              anchors.leftMargin: Woodland.size(14)
+              anchors.leftMargin: Theme.size(14)
               anchors.right: parent.right
-              anchors.rightMargin: Woodland.size(44)
+              anchors.rightMargin: Theme.size(44)
               anchors.verticalCenter: parent.verticalCenter
               spacing: 0
 
@@ -369,19 +369,19 @@ Item {
                 width: parent.width
                 text: row.modelData.name
                 elide: Text.ElideRight
-                font.family: Woodland.display
+                font.family: Theme.display
                 font.pointSize: 11.5
                 font.weight: row.lit > 0.5 ? Font.ExtraBold : Font.DemiBold
-                color: row.lit > 0.5 ? Woodland.line : Woodland.fog
+                color: row.lit > 0.5 ? Theme.line : Theme.inkSoft
               }
               Text {
                 width: parent.width
                 visible: text !== ""
                 text: (row.modelData.genericName || row.modelData.comment || "").toLowerCase()
                 elide: Text.ElideRight
-                font.family: Woodland.font
+                font.family: Theme.font
                 font.pointSize: 7.5
-                color: Woodland.bark
+                color: Theme.inkFaint
               }
             }
           }
@@ -405,7 +405,7 @@ Item {
         property real angle: 0
       }
       SequentialAnimation {
-        running: Woodland.fx && root.visible && list.count > 0
+        running: Theme.fx && root.visible && list.count > 0
         loops: Animation.Infinite
         NumberAnimation { target: wiggle; property: "angle"; to: -7; duration: 140; easing.type: Easing.InOutSine }
         NumberAnimation { target: wiggle; property: "angle"; to: 6; duration: 180; easing.type: Easing.InOutSine }
@@ -416,22 +416,22 @@ Item {
       Column {
         anchors.centerIn: parent
         visible: list.count === 0
-        spacing: Woodland.size(8)
+        spacing: Theme.size(8)
         Friend {
           anchors.horizontalCenter: parent.horizontalCenter
-          width: Woodland.size(72)
+          width: Theme.size(72)
           kind: root.who
           role: "cry"
           mood: "cry"
-          animated: Woodland.fx && list.count === 0
+          animated: Theme.fx && list.count === 0
         }
         Text {
           anchors.horizontalCenter: parent.horizontalCenter
           text: "nothing here by that name…"
-          font.family: Woodland.display
+          font.family: Theme.display
           font.pointSize: 11
           font.weight: Font.Bold
-          color: Woodland.fog
+          color: Theme.inkSoft
         }
       }
     }
@@ -441,9 +441,9 @@ Item {
       anchors.bottom: parent.bottom
       anchors.right: parent.right
       text: "↑↓ choose   ⏎ ya-ha!   esc bye-bye"
-      font.family: Woodland.font
+      font.family: Theme.font
       font.pointSize: 7.5
-      color: Woodland.bark
+      color: Theme.inkFaint
     }
   }
 

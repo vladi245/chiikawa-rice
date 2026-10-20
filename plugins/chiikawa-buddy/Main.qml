@@ -13,15 +13,6 @@ Item {
   id: root
   property var pluginApi: null
 
-  property string rice: ""
-  FileView {
-    path: Quickshell.env("HOME") + "/.config/rice/current"
-    watchChanges: true
-    onFileChanged: reload()
-    onLoaded: root.rice = text().trim()
-  }
-  readonly property bool active: rice === "chiikawa"
-
   CastFile {
     id: castFile
   }
@@ -40,7 +31,7 @@ Item {
   Component.onDestruction: SystemStatService.unregisterComponent(registrationId)
 
   Variants {
-    model: root.active && castFile.who("pet") !== "none" ? Quickshell.screens.filter(s => s.name === root.homeScreen) : []
+    model: castFile.who("pet") !== "none" ? Quickshell.screens.filter(s => s.name === root.homeScreen) : []
 
     delegate: PanelWindow {
       id: win
@@ -76,8 +67,8 @@ Item {
     property var cast: null
     property alias hitItem: hit
 
-    readonly property real size: Woodland.size(84)
-    readonly property real ground: height - Woodland.size(6)
+    readonly property real size: Theme.size(84)
+    readonly property real ground: height - Theme.size(6)
 
     readonly property string friend: cast?.who("pet") ?? "hachiware"
     readonly property var friends: cast?.kinds ?? ["hachiware"]
@@ -234,7 +225,7 @@ Item {
       if (!canWalk)
         return;
       const fast = running || !has("walk");
-      const speed = Woodland.size(fast ? 95 : 38);
+      const speed = Theme.size(fast ? 95 : 38);
       dir = target > px ? 1 : -1;
       action = fast && has("run") ? "run" : "walk";
       walkAnim.to = target;
@@ -311,7 +302,7 @@ Item {
     }
 
     Timer {
-      running: pet.action === "dance" && !pet.busy && Woodland.fx
+      running: pet.action === "dance" && !pet.busy && Theme.fx
       repeat: true
       interval: 1700
       onTriggered: if (Math.random() < 0.5)
@@ -325,7 +316,7 @@ Item {
       radius: height / 2
       x: pet.px - width / 2
       y: pet.ground - height / 2
-      color: Qt.alpha(Woodland.line, 0.18 * s)
+      color: Qt.alpha(Theme.line, 0.18 * s)
     }
 
     Item {
@@ -362,7 +353,7 @@ Item {
           mood: pet.mood
           walking: pet.action === "walk" && !pet.busy
           bobbing: pet.action === "dance" && !pet.busy
-          animated: Woodland.fx
+          animated: Theme.fx
         }
       }
 
@@ -371,13 +362,13 @@ Item {
         width: pet.size * 0.1
         height: width * 1.4
         radius: width / 2
-        color: Woodland.hachiware
+        color: Theme.hachiware
         border.width: 1
-        border.color: Woodland.line
+        border.color: Theme.line
         x: pet.size * 0.82
         y: pet.size * 0.22
         SequentialAnimation on opacity {
-          running: Woodland.fx && pet.sweaty
+          running: Theme.fx && pet.sweaty
           loops: Animation.Infinite
           NumberAnimation { from: 1; to: 0.3; duration: 600 }
           NumberAnimation { from: 0.3; to: 1; duration: 600 }
@@ -389,17 +380,17 @@ Item {
         x: pet.size * 0.86
         y: -pet.size * 0.05
         text: pet.action === "dance" ? "♪" : "z"
-        font.family: Woodland.display
+        font.family: Theme.display
         font.pixelSize: pet.size * 0.26
         font.weight: Font.Black
-        color: pet.action === "dance" ? Woodland.windowLight : Woodland.hachiware
+        color: pet.action === "dance" ? Theme.pink : Theme.hachiware
         SequentialAnimation on y {
-          running: Woodland.fx && parent.visible
+          running: Theme.fx && parent.visible
           loops: Animation.Infinite
           NumberAnimation { from: pet.size * 0.05; to: -pet.size * 0.2; duration: 1200; easing.type: Easing.OutQuad }
         }
         SequentialAnimation on opacity {
-          running: Woodland.fx && parent.visible
+          running: Theme.fx && parent.visible
           loops: Animation.Infinite
           NumberAnimation { from: 0; to: 1; duration: 300 }
           NumberAnimation { to: 0; duration: 900 }
@@ -420,13 +411,13 @@ Item {
             id: heart
             required property int index
             text: "♥"
-            color: index % 2 ? Woodland.windowLight : Woodland.blush
+            color: index % 2 ? Theme.pink : Theme.blush
             font.pixelSize: pet.size * 0.22
             x: pet.size * (0.15 + index * 0.22)
             y: pet.size * 0.2
             opacity: 0
             function pop() {
-              if (Woodland.fx)
+              if (Theme.fx)
                 anim.restart();
             }
             SequentialAnimation {
@@ -523,14 +514,14 @@ Item {
 
     Rectangle {
       visible: pet.phrase !== ""
-      width: words.implicitWidth + Woodland.size(20)
-      height: words.implicitHeight + Woodland.size(10)
+      width: words.implicitWidth + Theme.size(20)
+      height: words.implicitHeight + Theme.size(10)
       radius: height / 2
       x: Math.max(4, Math.min(pet.width - width - 4, pet.px - width / 2))
-      y: hit.y - height - Woodland.size(8)
-      color: Woodland.white
+      y: hit.y - height - Theme.size(8)
+      color: Theme.white
       border.width: 1.5
-      border.color: Woodland.line
+      border.color: Theme.line
       scale: visible ? 1 : 0.5
       Behavior on scale {
         NumberAnimation { duration: 220; easing.type: Easing.OutBack }
@@ -539,10 +530,10 @@ Item {
         id: words
         anchors.centerIn: parent
         text: pet.phrase
-        font.family: Woodland.display
-        font.pixelSize: Woodland.size(13)
+        font.family: Theme.display
+        font.pixelSize: Theme.size(13)
         font.weight: Font.Black
-        color: Woodland.line
+        color: Theme.line
       }
     }
   }

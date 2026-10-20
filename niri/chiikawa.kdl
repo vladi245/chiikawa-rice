@@ -1,5 +1,5 @@
 layer-rule {
-    match namespace="^woodland-backdrop"
+    match namespace="^chiikawa-backdrop"
     place-within-backdrop true
 }
 

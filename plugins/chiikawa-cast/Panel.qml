@@ -1,12 +1,12 @@
 import QtQuick
 import "../../chiikawa"
 
-WPanel {
+CPanel {
   id: root
 
-  contentPreferredWidth: Woodland.size(420)
-  contentPreferredHeight: Woodland.size(585)
-  scene.rainCount: 20
+  contentPreferredWidth: Theme.size(420)
+  contentPreferredHeight: Theme.size(585)
+  scene.density: 20
 
   CastFile {
     id: castFile
@@ -49,7 +49,7 @@ WPanel {
 
   Item {
     width: 1
-    height: Woodland.size(2)
+    height: Theme.size(2)
   }
 
   Repeater {
@@ -58,28 +58,28 @@ WPanel {
       id: section
       required property var modelData
       width: parent.width
-      spacing: Woodland.size(6)
+      spacing: Theme.size(6)
 
       Row {
-        spacing: Woodland.size(8)
+        spacing: Theme.size(8)
         Text {
           text: section.modelData.title
-          font.family: Woodland.display
+          font.family: Theme.display
           font.pointSize: 10.5
           font.weight: Font.ExtraBold
-          color: Woodland.mist
+          color: Theme.ink
         }
         Text {
           anchors.baseline: parent.children[0].baseline
           text: section.modelData.hint
-          font.family: Woodland.font
+          font.family: Theme.font
           font.pointSize: 7.5
-          color: Woodland.bark
+          color: Theme.inkFaint
         }
       }
 
       Row {
-        spacing: Woodland.size(6)
+        spacing: Theme.size(6)
 
         Repeater {
           model: section.modelData.nobody ? castFile.kinds.concat(["none"]) : castFile.kinds
@@ -89,12 +89,12 @@ WPanel {
             readonly property bool chosen: root.picked(section.modelData, modelData)
             readonly property bool hot: cardHover.hovered
 
-            width: Woodland.size(section.modelData.nobody ? 70 : 87)
-            height: Woodland.size(86)
-            radius: Woodland.size(16)
-            color: chosen ? Woodland.blush : (hot ? Qt.alpha(Woodland.blush, 0.35) : Woodland.white)
+            width: Theme.size(section.modelData.nobody ? 70 : 87)
+            height: Theme.size(86)
+            radius: Theme.size(16)
+            color: chosen ? Theme.blush : (hot ? Qt.alpha(Theme.blush, 0.35) : Theme.white)
             border.width: chosen ? 2 : 1.5
-            border.color: chosen ? Woodland.line : Qt.alpha(Woodland.line, 0.45)
+            border.color: chosen ? Theme.line : Qt.alpha(Theme.line, 0.45)
             scale: cardTap.pressed ? 0.94 : (hot ? 1.04 : 1)
             Behavior on scale {
               SpringAnimation { spring: 6; damping: 0.3; epsilon: 0.005 }
@@ -107,40 +107,40 @@ WPanel {
               id: face
               visible: card.modelData !== "none"
               anchors.horizontalCenter: parent.horizontalCenter
-              y: Woodland.size(6)
-              width: Woodland.size(56)
+              y: Theme.size(6)
+              width: Theme.size(56)
               kind: card.modelData === "none" ? "hachiware" : card.modelData
               role: card.chosen || card.hot ? "idle" : ""
-              animated: Woodland.fx && root.visible
+              animated: Theme.fx && root.visible
             }
             Text {
               visible: card.modelData === "none"
               anchors.horizontalCenter: parent.horizontalCenter
-              y: Woodland.size(18)
+              y: Theme.size(18)
               text: "z z"
-              font.family: Woodland.display
+              font.family: Theme.display
               font.pointSize: 16
               font.weight: Font.Black
-              color: Woodland.bark
+              color: Theme.inkFaint
             }
             Text {
               anchors.horizontalCenter: parent.horizontalCenter
               anchors.bottom: parent.bottom
-              anchors.bottomMargin: Woodland.size(6)
+              anchors.bottomMargin: Theme.size(6)
               text: card.modelData === "none" ? "nobody" : (castFile.names[card.modelData] ?? card.modelData).toLowerCase()
-              font.family: Woodland.font
+              font.family: Theme.font
               font.pointSize: 7.5
               font.weight: card.chosen ? Font.Bold : Font.Normal
-              color: card.chosen ? Woodland.line : Woodland.fog
+              color: card.chosen ? Theme.line : Theme.inkSoft
             }
             Text {
               visible: card.chosen && section.modelData.many
               anchors.right: parent.right
               anchors.top: parent.top
-              anchors.margins: Woodland.size(4)
+              anchors.margins: Theme.size(4)
               text: "♥"
-              font.pixelSize: Woodland.size(12)
-              color: Woodland.windowLight
+              font.pixelSize: Theme.size(12)
+              color: Theme.pink
             }
 
             HoverHandler {

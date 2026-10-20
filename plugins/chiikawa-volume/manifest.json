@@ -1,0 +1,19 @@
+{
+  "id": "chiikawa-volume",
+  "name": "Chiikawa Volume",
+  "version": "1.0.0",
+  "minNoctaliaVersion": "4.0.0",
+  "author": "vlad",
+  "description": "Volume button with sound ripples and a mixer panel (output, input, devices).",
+  "tags": [
+    "Bar",
+    "Audio"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml",
+    "panel": "Panel.qml"
+  },
+  "metadata": {
+    "defaultSettings": {}
+  }
+}

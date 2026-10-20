@@ -54,29 +54,29 @@ Item {
   readonly property bool dancing: playing && !muted && castFile.has(who, "dance")
 
   width: parent ? parent.width : 0
-  height: Woodland.size(150)
+  height: Theme.size(150)
 
   onGearChanged: face.boing()
 
   Rectangle {
     id: stage
     anchors.fill: parent
-    radius: Woodland.size(22)
-    color: Woodland.white
+    radius: Theme.size(22)
+    color: Theme.white
     border.width: 1.5
-    border.color: Woodland.line
+    border.color: Theme.line
     clip: true
 
     Shape {
       anchors.fill: parent
       preferredRendererType: Shape.CurveRenderer
       ShapePath {
-        strokeColor: Qt.alpha(Woodland.line, 0.35)
+        strokeColor: Qt.alpha(Theme.line, 0.35)
         strokeWidth: 1.2
-        fillColor: Qt.alpha(Woodland.grass, 0.7)
+        fillColor: Qt.alpha(Theme.grass, 0.7)
         PathSvg {
           path: {
-            const w = stage.width, h = stage.height, top = h - Woodland.size(26);
+            const w = stage.width, h = stage.height, top = h - Theme.size(26);
             return `M 0 ${h} L 0 ${top + 8} Q ${w * 0.3} ${top - 8} ${w * 0.55} ${top + 2} Q ${w * 0.8} ${top + 10} ${w} ${top} L ${w} ${h} Z`;
           }
         }
@@ -89,14 +89,14 @@ Item {
         id: box
         required property int index
         readonly property real pulse: hero.playing && !hero.muted ? beat.level * Math.min(1, hero.volume) : 0
-        width: Woodland.size(hero.gear === "screen" ? 30 : 24)
+        width: Theme.size(hero.gear === "screen" ? 30 : 24)
         height: width * 1.45
-        radius: Woodland.size(6)
+        radius: Theme.size(6)
         color: hero.gearColor
         border.width: 1.5
-        border.color: Woodland.line
-        x: face.x + (index === 0 ? -width - Woodland.size(10) : face.width + Woodland.size(10))
-        y: stage.height - Woodland.size(22) - height
+        border.color: Theme.line
+        x: face.x + (index === 0 ? -width - Theme.size(10) : face.width + Theme.size(10))
+        y: stage.height - Theme.size(22) - height
         Repeater {
           model: 2
           delegate: Rectangle {
@@ -107,9 +107,9 @@ Item {
             radius: d / 2
             x: (box.width - d) / 2
             y: (index === 0 ? box.height * 0.62 : box.height * 0.24) - d / 2
-            color: Woodland.white
+            color: Theme.white
             border.width: 1.2
-            border.color: Woodland.line
+            border.color: Theme.line
           }
         }
       }
@@ -117,16 +117,16 @@ Item {
 
     Friend {
       id: face
-      width: Woodland.size(96)
-      x: hero.onSpeakers ? Woodland.size(56) : Woodland.size(26)
-      y: stage.height - Woodland.size(18) - width
+      width: Theme.size(96)
+      x: hero.onSpeakers ? Theme.size(56) : Theme.size(26)
+      y: stage.height - Theme.size(18) - width
       kind: hero.who
       role: hero.dancing ? "dance" : ""
       mood: hero.mood
       bobbing: hero.playing && !hero.muted
       headgear: hero.onSpeakers || hero.dancing ? "none" : (hero.gear === "wireless" ? "wireless" : hero.gear)
       gearColor: hero.gearColor
-      animated: Woodland.fx
+      animated: Theme.fx
 
       MouseArea {
         anchors.fill: parent
@@ -139,20 +139,20 @@ Item {
     }
 
     Repeater {
-      model: hero.playing && !hero.muted && Woodland.fx ? Math.max(1, Math.round(hero.volume * 4)) : 0
+      model: hero.playing && !hero.muted && Theme.fx ? Math.max(1, Math.round(hero.volume * 4)) : 0
       delegate: Text {
         id: note
         required property int index
         text: index % 2 ? "♪" : "♫"
-        color: index % 3 === 0 ? Woodland.windowLight : (index % 3 === 1 ? Woodland.hachiware : Woodland.ember)
-        font.pixelSize: Woodland.size(14)
+        color: index % 3 === 0 ? Theme.pink : (index % 3 === 1 ? Theme.hachiware : Theme.honey)
+        font.pixelSize: Theme.size(14)
         font.weight: Font.Black
         x: face.x + face.width * (index % 2 ? 0.95 : 0.0)
         opacity: 0
         SequentialAnimation on y {
           loops: Animation.Infinite
           PauseAnimation { duration: note.index * 380 }
-          NumberAnimation { from: face.y + face.height * 0.4; to: face.y - Woodland.size(6); duration: 1500; easing.type: Easing.OutQuad }
+          NumberAnimation { from: face.y + face.height * 0.4; to: face.y - Theme.size(6); duration: 1500; easing.type: Easing.OutQuad }
         }
         SequentialAnimation on opacity {
           loops: Animation.Infinite
@@ -166,61 +166,61 @@ Item {
     Rectangle {
       id: bubble
       anchors.right: parent.right
-      anchors.rightMargin: Woodland.size(14)
+      anchors.rightMargin: Theme.size(14)
       anchors.top: parent.top
-      anchors.topMargin: Woodland.size(16)
-      width: Math.min(parent.width - face.x - face.width - Woodland.size(40), Math.max(title.implicitWidth, sub.implicitWidth) + Woodland.size(24))
-      height: words.implicitHeight + Woodland.size(16)
-      radius: Woodland.size(14)
-      color: Woodland.night
+      anchors.topMargin: Theme.size(16)
+      width: Math.min(parent.width - face.x - face.width - Theme.size(40), Math.max(title.implicitWidth, sub.implicitWidth) + Theme.size(24))
+      height: words.implicitHeight + Theme.size(16)
+      radius: Theme.size(14)
+      color: Theme.paper
       border.width: 1.5
-      border.color: Woodland.line
+      border.color: Theme.line
 
       Column {
         id: words
         anchors.centerIn: parent
-        width: parent.width - Woodland.size(20)
-        spacing: Woodland.size(2)
+        width: parent.width - Theme.size(20)
+        spacing: Theme.size(2)
         Text {
           id: title
           width: parent.width
           text: hero.muted ? "shh… muted" : (hero.playing ? "listening on" : "ready on")
           elide: Text.ElideRight
-          font.family: Woodland.display
+          font.family: Theme.display
           font.pointSize: 9
           font.weight: Font.ExtraBold
-          color: hero.muted ? Woodland.bark : Woodland.windowLight
+          color: hero.muted ? Theme.inkFaint : Theme.pink
         }
         Text {
           width: parent.width
           text: hero.deviceName
           elide: Text.ElideRight
-          font.family: Woodland.display
+          font.family: Theme.display
           font.pointSize: 11
           font.weight: Font.Black
-          color: Woodland.mist
+          color: Theme.ink
         }
         Text {
           id: sub
           width: parent.width
           text: hero.gearLabel + "  ·  " + Math.round(hero.volume * 100) + "%"
           elide: Text.ElideRight
-          font.family: Woodland.font
+          font.family: Theme.font
           font.pointSize: 7.5
-          color: Woodland.fog
+          color: Theme.inkSoft
         }
       }
     }
 
     Text {
       anchors.right: parent.right
-      anchors.rightMargin: Woodland.size(16)
+      anchors.rightMargin: Theme.size(16)
       anchors.bottom: parent.bottom
-      anchors.bottomMargin: Woodland.size(6)
+      anchors.bottomMargin: Theme.size(6)
       text: "tap " + (castFile.names[hero.who] ?? "them").toLowerCase() + " to " + (hero.muted ? "unmute" : "mute")
-      font.family: Woodland.font
+      font.family: Theme.font
       font.pointSize: 7
-      color: Woodland.fog
+      color: Theme.inkSoft
     }
   }
 
@@ -229,7 +229,7 @@ Item {
     property real level: 0
   }
   SequentialAnimation {
-    running: Woodland.fx && hero.playing && !hero.muted && hero.visible
+    running: Theme.fx && hero.playing && !hero.muted && hero.visible
     loops: Animation.Infinite
     NumberAnimation { target: beat; property: "level"; to: 1; duration: 120; easing.type: Easing.OutQuad }
     NumberAnimation { target: beat; property: "level"; to: 0; duration: 340; easing.type: Easing.InQuad }

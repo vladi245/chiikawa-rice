@@ -1,0 +1,18 @@
+{
+  "id": "chiikawa-overview",
+  "name": "Chiikawa Overview",
+  "version": "1.0.0",
+  "minNoctaliaVersion": "4.0.0",
+  "author": "vlad",
+  "description": "Backdrop for niri's overview: the wallpaper softened with drifting clouds and sparkles, and a strip of workspaces.",
+  "tags": [
+    "Overview",
+    "Workspaces"
+  ],
+  "entryPoints": {
+    "main": "Main.qml"
+  },
+  "metadata": {
+    "defaultSettings": {}
+  }
+}

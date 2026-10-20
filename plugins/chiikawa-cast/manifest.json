@@ -4,11 +4,16 @@
   "version": "1.0.0",
   "minNoctaliaVersion": "4.0.0",
   "author": "vlad",
-  "description": "Pick who appears where in the chiikawa rice: the desktop pet, the sound panel, the launcher and the friends peeking over the lock screen.",
-  "tags": ["Bar", "Fun"],
+  "description": "Pick who appears where: the desktop pet, the sound panel, the launcher and the friends peeking over the lock screen.",
+  "tags": [
+    "Bar",
+    "Fun"
+  ],
   "entryPoints": {
     "barWidget": "BarWidget.qml",
     "panel": "Panel.qml"
   },
-  "metadata": { "defaultSettings": {} }
+  "metadata": {
+    "defaultSettings": {}
+  }
 }

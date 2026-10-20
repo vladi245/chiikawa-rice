@@ -4,7 +4,7 @@
   "version": "2.0.0",
   "minNoctaliaVersion": "4.0.0",
   "author": "vlad",
-  "description": "A desktop pet that wanders along the bottom of the main screen in the chiikawa rice, playing the friend's real animations: pet it, pick it up and drop it, double-click for its love animation; it dances to music, cries on low battery and naps at night. Who it is comes from the cast picker.",
+  "description": "A desktop pet that wanders along the bottom of the main screen, playing the friend's real animations: pet it, pick it up and drop it, double-click for its love animation; it dances to music, cries on low battery and naps at night.",
   "tags": [
     "Desktop",
     "Fun"

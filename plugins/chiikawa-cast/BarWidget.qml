@@ -31,12 +31,12 @@ Item {
     width: root.capsuleHeight * 0.92
     height: width
     radius: width / 2
-    color: Woodland.blush
+    color: Theme.blush
     border.width: 1.5
-    border.color: Woodland.line
+    border.color: Theme.line
     scale: root.hot ? 1 : 0
     Behavior on scale {
-      enabled: Woodland.fx
+      enabled: Theme.fx
       NumberAnimation { duration: 260; easing.type: Easing.OutBack; easing.overshoot: 2.2 }
     }
   }
@@ -47,7 +47,7 @@ Item {
     width: root.capsuleHeight * 0.86
     kind: root.who
     role: root.hot ? "idle" : ""
-    animated: Woodland.fx
+    animated: Theme.fx
   }
 
   HoverHandler {

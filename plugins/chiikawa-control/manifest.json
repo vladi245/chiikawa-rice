@@ -1,0 +1,19 @@
+{
+  "id": "chiikawa-control",
+  "name": "Chiikawa Control Center",
+  "version": "1.0.0",
+  "minNoctaliaVersion": "4.0.0",
+  "author": "vlad",
+  "description": "Control center with clock, weather, quick toggles, sliders, media and session actions.",
+  "tags": [
+    "Bar",
+    "System"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml",
+    "panel": "Panel.qml"
+  },
+  "metadata": {
+    "defaultSettings": {}
+  }
+}

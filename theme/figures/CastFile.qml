@@ -28,7 +28,7 @@ Item {
 
   FileView {
     id: file
-    path: Quickshell.env("HOME") + "/.config/rice/chiikawa-cast.json"
+    path: Quickshell.env("HOME") + "/.config/chiikawa-rice/cast.json"
     watchChanges: true
     onFileChanged: reload()
     onLoaded: {

@@ -27,12 +27,12 @@ Item {
     width: root.capsuleHeight * 0.92
     height: width
     radius: width / 2
-    color: Woodland.blush
+    color: Theme.blush
     border.width: 1.5
-    border.color: Woodland.line
+    border.color: Theme.line
     scale: root.active ? 1 : 0
     Behavior on scale {
-      enabled: Woodland.fx
+      enabled: Theme.fx
       NumberAnimation { duration: 260; easing.type: Easing.OutBack; easing.overshoot: 2.2 }
     }
   }
@@ -66,7 +66,7 @@ Item {
     anchors.centerIn: parent
     width: root.capsuleHeight * 1.05
     height: width
-    opacity: root.active && Woodland.fx ? 1 : 0
+    opacity: root.active && Theme.fx ? 1 : 0
     visible: opacity > 0
     Behavior on opacity {
       NumberAnimation { duration: 200 }
@@ -86,7 +86,7 @@ Item {
         required property int index
         readonly property real angle: index * Math.PI * 2 / 3
         text: index === 0 ? "♥" : "✦"
-        color: index === 1 ? Woodland.ember : Woodland.windowLight
+        color: index === 1 ? Theme.honey : Theme.pink
         font.pixelSize: root.capsuleHeight * 0.24
         x: orbit.width / 2 + Math.cos(angle) * orbit.width / 2 - width / 2
         y: orbit.height / 2 + Math.sin(angle) * orbit.height / 2 - height / 2
@@ -102,7 +102,7 @@ Item {
 
   TapHandler {
     onTapped: {
-      if (Woodland.fx)
+      if (Theme.fx)
         boing.restart();
       root.pluginApi?.togglePanel(root.screen, root);
     }

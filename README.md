@@ -37,14 +37,35 @@ Chiikawa, Hachiware, Usagi and Momonga living on your desktop.
 - A lock screen (`Mod+Alt+L`) where the friends peek over a paper card
 - A cast picker in the bar to choose who shows up where
 - niri: round corners, a blush-to-blue focus ring and springy animations
-- Matching Ghostty and Dolphin colors
+- Matching Ghostty and Dolphin colors, and a Momonga fastfetch
+  (`fastfetch -c chiikawa`)
 
 ## Requirements
 
 - niri 25.11+ and Noctalia Shell 4.0+ (started at least once)
-- `jq`, ImageMagick 7, `flock`
-- Fonts: Nunito and Maple Mono NF
-- Optional: Ghostty, Dolphin
+- `jq`, ImageMagick (6 or 7), `flock` (util-linux)
+- Fonts: [Nunito](https://fonts.google.com/specimen/Nunito) and
+  [Maple Mono NF](https://github.com/subframe7536/maple-font)
+- Optional: Ghostty, Dolphin, fastfetch
+
+The installer is a plain shell script, so any distro with these works.
+Noctalia has [install instructions](https://github.com/noctalia-dev/noctalia-shell)
+for most distros. On Arch the rest is:
+
+```bash
+sudo pacman -S niri jq imagemagick util-linux
+```
+
+On NixOS, with Noctalia's flake as an input (`github:noctalia-dev/noctalia-shell`):
+
+```nix
+programs.niri.enable = true;
+environment.systemPackages = with pkgs; [
+  inputs.noctalia.packages.${pkgs.system}.default
+  jq imagemagick util-linux
+];
+fonts.packages = with pkgs; [ nunito maple-mono.NF ];
+```
 
 ## Install
 
@@ -62,12 +83,12 @@ puts them back.
 Preview the lock screen without locking:
 
 ```bash
-WOODLAND_LOCK_PREVIEW=1 ./scripts/lock-screen
+CHIIKAWA_LOCK_PREVIEW=1 ./scripts/lock-screen
 ```
 
 ## Customizing
 
-- Colors: `theme/Woodland.qml` (panels), `niri/chiikawa.kdl`,
+- Colors: `theme/Theme.qml` (panels), `niri/chiikawa.kdl`,
   `ghostty/chiikawa.ghostty`, `kde/Chiikawa.colors`
 - Animations: drop a gif into `theme/figures/art/<friend>/` and add its name
   to `theme/figures/cast.js`

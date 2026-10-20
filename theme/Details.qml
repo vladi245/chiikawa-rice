@@ -5,10 +5,10 @@ Column {
   id: details
 
   property var pairs: []
-  property real keyWidth: Woodland.size(64)
+  property real keyWidth: Theme.size(64)
 
   width: parent ? parent.width : 0
-  spacing: Woodland.size(3)
+  spacing: Theme.size(3)
 
   Repeater {
     model: details.pairs.filter(p => p[1] !== undefined && p[1] !== null && String(p[1]) !== "")
@@ -23,10 +23,10 @@ Column {
         id: key
         width: details.keyWidth
         text: line.copied ? "copied!" : line.modelData[0]
-        font.family: Woodland.font
+        font.family: Theme.font
         font.pointSize: 8
         font.weight: line.copied ? Font.Bold : Font.Normal
-        color: line.copied ? Woodland.windowLight : Woodland.bark
+        color: line.copied ? Theme.pink : Theme.inkFaint
       }
       Text {
         id: value
@@ -34,9 +34,9 @@ Column {
         anchors.right: parent.right
         text: String(line.modelData[1])
         wrapMode: Text.WrapAnywhere
-        font.family: Woodland.font
+        font.family: Theme.font
         font.pointSize: 8
-        color: hover.hovered ? Woodland.windowLight : Woodland.mist
+        color: hover.hovered ? Theme.pink : Theme.ink
         HoverHandler {
           id: hover
           cursorShape: Qt.PointingHandCursor

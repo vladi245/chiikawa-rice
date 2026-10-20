@@ -78,13 +78,13 @@ Item {
     anchors.fill: parent
     Image {
       anchors.fill: parent
-      source: Quickshell.env("WOODLAND_LOCK_SHARP") || ""
+      source: Quickshell.env("CHIIKAWA_LOCK_SHARP") || ""
       fillMode: Image.PreserveAspectCrop
       asynchronous: true
     }
     Image {
       anchors.fill: parent
-      source: Quickshell.env("WOODLAND_LOCK_BG") || ""
+      source: Quickshell.env("CHIIKAWA_LOCK_BG") || ""
       fillMode: Image.PreserveAspectCrop
       asynchronous: true
       opacity: view.unlocking ? 0 : 0.85

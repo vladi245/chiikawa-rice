@@ -21,19 +21,19 @@
       "ActiveWindow"
     ],
     "center": [
-      "plugin:woodland-calendar"
+      "plugin:chiikawa-calendar"
     ],
     "right": [
       "plugin:vinyl-media",
       "Tray",
-      "plugin:woodland-notifications",
+      "plugin:chiikawa-notifications",
       "plugin:liquid-battery",
-      "plugin:woodland-volume",
-      "plugin:woodland-brightness",
-      "plugin:woodland-bluetooth",
-      "plugin:woodland-network",
+      "plugin:chiikawa-volume",
+      "plugin:chiikawa-brightness",
+      "plugin:chiikawa-bluetooth",
+      "plugin:chiikawa-network",
       "plugin:chiikawa-cast",
-      "plugin:woodland-control"
+      "plugin:chiikawa-control"
     ]
   },
   "widgetDefaults": {
@@ -52,26 +52,26 @@
     "plugin:liquid-battery": {
       "id": "plugin:liquid-battery"
     },
-    "plugin:woodland-volume": {
-      "id": "plugin:woodland-volume"
+    "plugin:chiikawa-volume": {
+      "id": "plugin:chiikawa-volume"
     },
-    "plugin:woodland-brightness": {
-      "id": "plugin:woodland-brightness"
+    "plugin:chiikawa-brightness": {
+      "id": "plugin:chiikawa-brightness"
     },
-    "plugin:woodland-network": {
-      "id": "plugin:woodland-network"
+    "plugin:chiikawa-network": {
+      "id": "plugin:chiikawa-network"
     },
-    "plugin:woodland-bluetooth": {
-      "id": "plugin:woodland-bluetooth"
+    "plugin:chiikawa-bluetooth": {
+      "id": "plugin:chiikawa-bluetooth"
     },
-    "plugin:woodland-notifications": {
-      "id": "plugin:woodland-notifications"
+    "plugin:chiikawa-notifications": {
+      "id": "plugin:chiikawa-notifications"
     },
-    "plugin:woodland-control": {
-      "id": "plugin:woodland-control"
+    "plugin:chiikawa-control": {
+      "id": "plugin:chiikawa-control"
     },
-    "plugin:woodland-calendar": {
-      "id": "plugin:woodland-calendar"
+    "plugin:chiikawa-calendar": {
+      "id": "plugin:chiikawa-calendar"
     },
     "plugin:pulse-monitor": {
       "id": "plugin:pulse-monitor"

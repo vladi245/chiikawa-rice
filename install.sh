@@ -15,9 +15,11 @@ say() { printf 'chiikawa: %s\n' "$*"; }
 warn() { printf 'chiikawa: warning: %s\n' "$*" >&2; }
 die() { printf 'chiikawa: %s\n' "$*" >&2; exit 1; }
 
-for cmd in noctalia-shell quickshell niri jq magick flock; do
+for cmd in noctalia-shell quickshell niri jq flock; do
   command -v "$cmd" >/dev/null 2>&1 || die "missing '$cmd' (see Requirements in README.md)"
 done
+command -v magick >/dev/null 2>&1 || command -v convert >/dev/null 2>&1 \
+  || die "missing ImageMagick (see Requirements in README.md)"
 [ -f "$settings_file" ] || die "no $settings_file yet; start Noctalia once, then rerun"
 for font in Nunito "Maple Mono NF"; do
   fc-list : family 2>/dev/null | grep -qiF "$font" || warn "font '$font' not found; the rice will fall back to another face"
@@ -64,8 +66,7 @@ stop_noctalia() {
 stop_noctalia
 
 mkdir -p "$noctalia_dir/plugins"
-# Plugins import the theme as ../../woodland and ../../chiikawa.
-link "$root/theme" "$noctalia_dir/woodland"
+# Plugins import the theme as ../../chiikawa.
 link "$root/theme" "$noctalia_dir/chiikawa"
 plugin_ids=
 for plugin_dir in "$root"/plugins/*/; do
@@ -96,9 +97,8 @@ trap - EXIT HUP INT TERM
 "$root/scripts/apply-noctalia-bar" "$root/noctalia/bar.json"
 say "linked the theme and $(echo "$plugin_ids" | wc -w) plugins, applied the bar"
 
-# chiikawa-buddy only shows while this says chiikawa.
-mkdir -p "$config_home/rice"
-printf 'chiikawa\n' > "$config_home/rice/current"
+# The cast picker saves its choices here.
+mkdir -p "$config_home/chiikawa-rice"
 
 mkdir -p "$niri_dir"
 link "$root/niri/chiikawa.kdl" "$niri_dir/chiikawa.kdl"
@@ -142,6 +142,13 @@ if command -v kwriteconfig6 >/dev/null 2>&1; then
   fi
   kwriteconfig6 --file dolphinrc --group UiSettings --key ColorScheme Chiikawa
   say "Dolphin uses the Chiikawa color scheme (reopen its windows)"
+fi
+
+if command -v fastfetch >/dev/null 2>&1; then
+  mkdir -p "$config_home/fastfetch"
+  sed "s|@LOGO@|$root/fastfetch/momonga.png|" "$root/fastfetch/chiikawa.jsonc" \
+    > "$config_home/fastfetch/chiikawa.jsonc"
+  say "run 'fastfetch -c chiikawa' for Momonga"
 fi
 
 stop_noctalia

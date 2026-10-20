@@ -24,7 +24,7 @@ for name in settings.json plugins.json; do
   [ -f "$backup/$name" ] && cp -p "$backup/$name" "$noctalia_dir/$name"
 done
 
-for path in "$noctalia_dir/woodland" "$noctalia_dir/chiikawa" "$noctalia_dir"/plugins/* \
+for path in "$noctalia_dir/chiikawa" "$noctalia_dir"/plugins/* \
             "$niri_dir/chiikawa.kdl" "$ghostty_dir/chiikawa.ghostty" \
             "$data_home/color-schemes/Chiikawa.colors"; do
   [ -L "$path" ] || continue
@@ -42,6 +42,7 @@ if [ -f "$backup/moved" ]; then
 fi
 
 rm -f "$niri_dir/chiikawa-binds.kdl"
+rm -f "$config_home/fastfetch/chiikawa.jsonc"
 [ -f "$niri_dir/config.kdl" ] && sed -i '/^\/\/ Chiikawa rice (/d; /^include optional=true "chiikawa\(-binds\)\?\.kdl"$/d' "$niri_dir/config.kdl"
 for config in "$ghostty_dir/config.ghostty" "$ghostty_dir/config"; do
   [ -f "$config" ] && sed -i '/chiikawa\.ghostty$/d' "$config"
@@ -54,7 +55,6 @@ if [ -f "$backup/dolphin-color-scheme" ] && command -v kwriteconfig6 >/dev/null 
     kwriteconfig6 --file dolphinrc --group UiSettings --key ColorScheme --delete
   fi
 fi
-grep -qx chiikawa "$config_home/rice/current" 2>/dev/null && rm -f "$config_home/rice/current"
 
 if [ -n "${WAYLAND_DISPLAY:-}" ]; then
   noctalia-shell -d >/dev/null 2>&1 < /dev/null

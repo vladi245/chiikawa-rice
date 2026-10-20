@@ -1,0 +1,101 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+  "logo": {
+    "type": "kitty",
+    "source": "@LOGO@",
+    "width": 26,
+    "height": 13,
+    "padding": {
+      "top": 1,
+      "right": 4
+    }
+  },
+  "display": {
+    "separator": "  ",
+    "color": {
+      "keys": "magenta",
+      "title": "white"
+    },
+    "percent": {
+      "type": 3
+    }
+  },
+  "modules": [
+    {
+      "type": "title",
+      "key": "  ◆ "
+    },
+    "separator",
+    {
+      "type": "os",
+      "key": "OS       "
+    },
+    {
+      "type": "host",
+      "key": "HOST     "
+    },
+    {
+      "type": "kernel",
+      "key": "KERNEL   "
+    },
+    {
+      "type": "uptime",
+      "key": "UPTIME   "
+    },
+    {
+      "type": "packages",
+      "key": "PACKAGES "
+    },
+    {
+      "type": "shell",
+      "key": "SHELL    "
+    },
+    {
+      "type": "terminal",
+      "key": "TERMINAL "
+    },
+    {
+      "type": "wm",
+      "key": "DESKTOP  "
+    },
+    "break",
+    {
+      "type": "cpu",
+      "key": "CPU      "
+    },
+    {
+      "type": "gpu",
+      "key": "GPU      "
+    },
+    {
+      "type": "memory",
+      "key": "MEMORY   "
+    },
+    {
+      "type": "swap",
+      "key": "SWAP     "
+    },
+    {
+      "type": "disk",
+      "key": "DISK     ",
+      "folders": "/"
+    },
+    {
+      "type": "battery",
+      "key": "BATTERY  "
+    },
+    "break",
+    {
+      "type": "colors",
+      "key": "         ",
+      "symbol": "square",
+      "block": {
+        "width": 3,
+        "range": [
+          0,
+          8
+        ]
+      }
+    }
+  ]
+}

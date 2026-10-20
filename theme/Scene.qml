@@ -6,14 +6,14 @@ Item {
   id: scene
 
   property bool sky: true
-  property bool rain: true
-  property int rainCount: Math.round(width * height / 7000)
-  property bool birds: true
-  property bool pines: true
-  property real pineScale: 1.0
-  property bool running: Woodland.fx && visible
+  property bool sparkles: true
+  property int density: Math.round(width * height / 7000)
+  property bool clouds: true
+  property bool grass: true
+  property real grassScale: 1.0
+  property bool running: Theme.fx && visible
 
-  readonly property int sparkleCount: Math.min(36, Math.max(6, Math.round(rainCount * 0.4)))
+  readonly property int sparkleCount: Math.min(36, Math.max(6, Math.round(density * 0.4)))
 
   clip: true
 
@@ -26,8 +26,8 @@ Item {
     anchors.fill: parent
     visible: scene.sky
     gradient: Gradient {
-      GradientStop { position: 0.0; color: Woodland.night }
-      GradientStop { position: 1.0; color: Woodland.dusk }
+      GradientStop { position: 0.0; color: Theme.paper }
+      GradientStop { position: 1.0; color: Theme.cream }
     }
   }
 
@@ -50,7 +50,7 @@ Item {
         width: scene.width * modelData.w
         height: Math.max(18, scene.height * modelData.h)
         radius: height / 2
-        color: Woodland.grass
+        color: Theme.grass
         opacity: 0.55
       }
     }
@@ -66,10 +66,10 @@ Item {
 
   Shape {
     anchors.fill: parent
-    visible: scene.pines
+    visible: scene.grass
     preferredRendererType: Shape.CurveRenderer
     ShapePath {
-      strokeColor: Qt.alpha(Woodland.line, 0.32)
+      strokeColor: Qt.alpha(Theme.line, 0.32)
       strokeWidth: 1.3
       capStyle: ShapePath.RoundCap
       fillColor: "transparent"
@@ -80,7 +80,7 @@ Item {
             return "";
           const rand = scene.rng(23);
           const n = Math.max(4, Math.round(w * h / 16000));
-          const s = 7 * scene.pineScale;
+          const s = 7 * scene.grassScale;
           let d = "";
           for (let i = 0; i < n; i++) {
             const x = rand() * w, y = h * 0.12 + rand() * h * 0.86;
@@ -95,18 +95,18 @@ Item {
 
   Shape {
     anchors.fill: parent
-    visible: scene.pines
+    visible: scene.grass
     preferredRendererType: Shape.CurveRenderer
     ShapePath {
-      strokeColor: Qt.alpha(Woodland.line, 0.25)
+      strokeColor: Qt.alpha(Theme.line, 0.25)
       strokeWidth: 1.2
-      fillColor: Qt.alpha(Woodland.grass, 0.55)
+      fillColor: Qt.alpha(Theme.grass, 0.55)
       PathSvg {
         path: {
           const w = scene.width, h = scene.height;
           if (w <= 0 || h <= 0)
             return "";
-          const top = h - Math.min(28, h * 0.08) * scene.pineScale;
+          const top = h - Math.min(28, h * 0.08) * scene.grassScale;
           return `M 0 ${h + 2} L 0 ${top + 6} Q ${w * 0.25} ${top - 6} ${w * 0.5} ${top + 2} Q ${w * 0.75} ${top + 10} ${w} ${top - 2} L ${w} ${h + 2} Z`;
         }
       }
@@ -114,7 +114,7 @@ Item {
   }
 
   Repeater {
-    model: scene.birds ? [{ "y": 0.05, "s": 1.0, "d": 70000, "from": 0.15 }, { "y": 0.15, "s": 0.7, "d": 95000, "from": 0.7 }] : []
+    model: scene.clouds ? [{ "y": 0.05, "s": 1.0, "d": 70000, "from": 0.15 }, { "y": 0.15, "s": 0.7, "d": 95000, "from": 0.7 }] : []
     delegate: Shape {
       id: cloud
       required property var modelData
@@ -124,9 +124,9 @@ Item {
       x: scene.width * modelData.from
       preferredRendererType: Shape.CurveRenderer
       ShapePath {
-        strokeColor: Qt.alpha(Woodland.line, 0.55)
+        strokeColor: Qt.alpha(Theme.line, 0.55)
         strokeWidth: 1.2
-        fillColor: Woodland.white
+        fillColor: Theme.white
         joinStyle: ShapePath.RoundJoin
         PathSvg {
           path: {
@@ -146,7 +146,7 @@ Item {
   }
 
   Repeater {
-    model: scene.rain && scene.running ? scene.sparkleCount : 0
+    model: scene.sparkles && scene.running ? scene.sparkleCount : 0
     delegate: Item {
       id: mote
       required property int index
@@ -165,13 +165,13 @@ Item {
         anchors.centerIn: parent
         text: "✦"
         font.pixelSize: mote.width * 1.3
-        color: mote.seed2 > 0.5 ? Woodland.windowLight : Woodland.ember
+        color: mote.seed2 > 0.5 ? Theme.pink : Theme.honey
       }
       Rectangle {
         visible: !mote.star
         anchors.fill: parent
         radius: width / 2
-        color: mote.seed2 > 0.4 ? Woodland.blush : Woodland.grass
+        color: mote.seed2 > 0.4 ? Theme.blush : Theme.grass
       }
 
       SequentialAnimation {

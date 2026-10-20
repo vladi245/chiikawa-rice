@@ -1,0 +1,19 @@
+{
+  "id": "chiikawa-network",
+  "name": "Chiikawa Network",
+  "version": "1.0.0",
+  "minNoctaliaVersion": "4.0.0",
+  "author": "vlad",
+  "description": "Wi-Fi button whose arcs breathe while searching, with a network panel.",
+  "tags": [
+    "Bar",
+    "Network"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml",
+    "panel": "Panel.qml"
+  },
+  "metadata": {
+    "defaultSettings": {}
+  }
+}

@@ -5,8 +5,8 @@ import Quickshell.Wayland
 
 ShellRoot {
   id: root
-  property bool preview: Quickshell.env("WOODLAND_LOCK_PREVIEW") === "1"
-  property string view: Quickshell.env("WOODLAND_LOCK_VIEW") || Qt.resolvedUrl("FallbackLockView.qml")
+  property bool preview: Quickshell.env("CHIIKAWA_LOCK_PREVIEW") === "1"
+  property string view: Quickshell.env("CHIIKAWA_LOCK_VIEW") || Qt.resolvedUrl("FallbackLockView.qml")
   property date now: new Date()
   property string password: ""
   property string status: ""

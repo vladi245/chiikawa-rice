@@ -1,0 +1,20 @@
+{
+  "id": "chiikawa-notifications",
+  "name": "Chiikawa Notifications",
+  "version": "1.0.0",
+  "minNoctaliaVersion": "4.0.0",
+  "author": "vlad",
+  "description": "Bell that swings on new notifications, with an unread badge and a history panel. Also restyles notification popups and system toasts.",
+  "tags": [
+    "Bar",
+    "Notifications"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml",
+    "panel": "Panel.qml",
+    "main": "Main.qml"
+  },
+  "metadata": {
+    "defaultSettings": {}
+  }
+}

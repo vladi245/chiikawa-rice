@@ -57,12 +57,12 @@ Item {
       width: bar.capsuleHeight * 0.92
       height: width
       radius: width / 2
-      color: Woodland.blush
+      color: Theme.blush
       border.width: 1.5
-      border.color: Woodland.line
+      border.color: Theme.line
       scale: bar.hot || bar.panelOpen ? 1 : 0
       Behavior on scale {
-        enabled: Woodland.fx
+        enabled: Theme.fx
         NumberAnimation { duration: 260; easing.type: Easing.OutBack; easing.overshoot: 2.2 }
       }
     }
@@ -74,7 +74,7 @@ Item {
       scale: bar.glyphScale * squash.level
       pointSize: bar.fontSize * 1.1
       applyUiScale: false
-      color: bar.dim ? Woodland.bark : (bar.hot || bar.panelOpen ? Woodland.line : (bar.lit ? Woodland.windowLight : Woodland.fog))
+      color: bar.dim ? Theme.inkFaint : (bar.hot || bar.panelOpen ? Theme.line : (bar.lit ? Theme.pink : Theme.inkSoft))
       Behavior on color {
         ColorAnimation { duration: 200 }
       }
@@ -111,10 +111,10 @@ Item {
       id: labelText
       anchors.verticalCenter: parent.verticalCenter
       text: bar.label
-      font.family: Woodland.font
+      font.family: Theme.font
       font.pointSize: bar.fontSize * 0.9
       font.weight: Font.Bold
-      color: Woodland.mist
+      color: Theme.ink
       opacity: bar.labelOpen ? 1 : 0
       Behavior on opacity {
         NumberAnimation { duration: 220 }
@@ -135,7 +135,7 @@ Item {
     onExited: TooltipService.hide()
     onClicked: mouse => {
                  TooltipService.hide();
-                 if (Woodland.fx)
+                 if (Theme.fx)
                    boing.restart();
                  if (mouse.button === Qt.RightButton)
                    bar.rightClicked();
