@@ -1,0 +1,40 @@
+#!/bin/sh
+# Noctalia's dark mode hook runs this with "true" or "false". The shell,
+# wallpaper and Ghostty follow dark mode on their own; this does niri and
+# Dolphin. Toggle dark mode itself from the control center or with
+# `noctalia-shell ipc call darkMode toggle`.
+set -eu
+
+script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+root=$(dirname "$script_dir")
+config_home=${XDG_CONFIG_HOME:-"$HOME/.config"}
+niri_dir="$config_home/niri"
+
+case ${1:-} in
+  true | dark) dark=1 ;;
+  false | light) dark= ;;
+  *) echo "usage: $0 dark|light" >&2; exit 2 ;;
+esac
+
+# chiikawa.kdl includes this file last, so the dark colors win when present.
+if [ -d "$niri_dir" ]; then
+  tmp=$(mktemp "$niri_dir/.chiikawa-mode.XXXXXX")
+  trap 'rm -f "$tmp"' EXIT HUP INT TERM
+  if [ -n "$dark" ]; then
+    cat "$root/niri/dark.kdl" > "$tmp"
+  else
+    printf '// Light mode: chiikawa.kdl colors as they are.\n' > "$tmp"
+  fi
+  chmod 644 "$tmp"
+  mv -f "$tmp" "$niri_dir/chiikawa-mode.kdl"
+  trap - EXIT HUP INT TERM
+  niri msg action load-config-file >/dev/null 2>&1 || true
+fi
+
+# Leave Dolphin alone if it's been switched to some other scheme.
+if command -v kwriteconfig6 >/dev/null 2>&1; then
+  case $(kreadconfig6 --file dolphinrc --group UiSettings --key ColorScheme) in
+    Chiikawa | ChiikawaNight)
+      kwriteconfig6 --file dolphinrc --group UiSettings --key ColorScheme "Chiikawa${dark:+Night}" ;;
+  esac
+fi

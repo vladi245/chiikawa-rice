@@ -234,7 +234,7 @@ CPanel {
     Column {
       anchors.left: avatarFrame.right
       anchors.leftMargin: Theme.size(10)
-      anchors.right: settingsButton.left
+      anchors.right: wallpaperButton.left
       anchors.rightMargin: Theme.size(8)
       anchors.verticalCenter: parent.verticalCenter
       spacing: 0
@@ -261,6 +261,15 @@ CPanel {
         font.pointSize: 7.5
         color: BatteryService.isCriticalBattery(BatteryService.primaryDevice) || BatteryService.isLowBattery(BatteryService.primaryDevice) ? Theme.honey : Theme.inkFaint
       }
+    }
+
+    CButton {
+      id: wallpaperButton
+      anchors.right: settingsButton.left
+      anchors.rightMargin: Theme.size(6)
+      anchors.verticalCenter: parent.verticalCenter
+      icon: "photo"
+      onClicked: root.closeThen(screen => PanelService.getPanel("wallpaperPanel", screen)?.toggle())
     }
 
     CButton {
@@ -399,10 +408,11 @@ CPanel {
       onActivated: BluetoothService.setBluetoothEnabled(!BluetoothService.enabled)
     }
     Tile {
-      icon: "photo"
-      label: "Wallpaper"
-      state: "choose"
-      onActivated: root.closeThen(screen => PanelService.getPanel("wallpaperPanel", screen)?.toggle())
+      icon: Settings.data.colorSchemes.darkMode ? "moon" : "sun"
+      label: "Dark mode"
+      on: Settings.data.colorSchemes.darkMode
+      state: Settings.data.colorSchemes.darkMode ? "rakko night" : "off"
+      onActivated: Settings.data.colorSchemes.darkMode = !Settings.data.colorSchemes.darkMode
     }
     Tile {
       icon: PowerProfileService.noctaliaPerformanceMode ? "rocket" : "rocket-off"

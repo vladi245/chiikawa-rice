@@ -14,7 +14,7 @@ CPanel {
   contentPreferredWidth: Theme.size(400)
   contentPreferredHeight: Theme.size(640)
   scene.density: 22
-  scene.pineScale: 0.7
+  scene.grassScale: 0.7
   spacing: Theme.size(14)
 
   readonly property var now: Time.now

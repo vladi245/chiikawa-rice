@@ -39,6 +39,9 @@ Chiikawa, Hachiware, Usagi and Momonga living on your desktop.
 - niri: round corners, a blush-to-blue focus ring and springy animations
 - Matching Ghostty and Dolphin colors, and a Momonga fastfetch
   (`fastfetch -c chiikawa`)
+- A dark mode with a moonlit Rakko wallpaper: the control center's
+  "Dark mode" tile (or `noctalia-shell ipc call darkMode toggle`) switches
+  the panels, wallpaper, niri, Ghostty, Dolphin and the lock screen
 
 ## Requirements
 
@@ -67,6 +70,37 @@ environment.systemPackages = with pkgs; [
 fonts.packages = with pkgs; [ nunito maple-mono.NF ];
 ```
 
+## Try it first
+
+```bash
+./scripts/preview
+```
+
+From a clone (see Install), this opens the rice in a nested niri window with
+its own throwaway home, so your niri, Noctalia and dotfiles are left alone.
+Close it with `Alt+Shift+E`.
+
+<details>
+<summary>Preview keys and options</summary>
+
+Inside the window `Alt` is Mod:
+
+| Keys | Does |
+| --- | --- |
+| `Alt+Space` | Launcher |
+| `Alt+O` | Overview |
+| `Alt+Return` | Terminal |
+| `Alt+Shift+D` | Toggle dark mode |
+| `Alt+Shift+/` | All keys |
+| `Alt+Shift+E` | Close the preview |
+
+- `./scripts/preview --reset` starts over from a fresh home
+- The preview lives in `~/.local/state/chiikawa-rice/preview`
+- `CHIIKAWA_LOCK_PREVIEW=1 ./scripts/lock-screen` previews just the lock
+  screen, without locking
+
+</details>
+
 ## Install
 
 ```bash
@@ -80,16 +114,14 @@ The installer links everything from the clone, so keep it where it is and
 settings to `~/.local/state/chiikawa-rice/` first, and `./uninstall.sh`
 puts them back.
 
-Preview the lock screen without locking:
-
-```bash
-CHIIKAWA_LOCK_PREVIEW=1 ./scripts/lock-screen
-```
-
 ## Customizing
 
-- Colors: `theme/Theme.qml` (panels), `niri/chiikawa.kdl`,
-  `ghostty/chiikawa.ghostty`, `kde/Chiikawa.colors`
+- Colors: `theme/Theme.qml` (panels, both modes), `niri/chiikawa.kdl` and
+  `niri/dark.kdl`, `ghostty/themes/`, `kde/Chiikawa.colors` and
+  `kde/ChiikawaNight.colors`
+- Dark mode runs `scripts/chiikawa-mode` through Noctalia's dark mode hook
+  for niri and Dolphin. Ghostty follows the desktop's light/dark preference,
+  which Noctalia sets when "sync gsettings" is on.
 - Animations: drop a gif into `theme/figures/art/<friend>/` and add its name
   to `theme/figures/cast.js`
 

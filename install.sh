@@ -10,6 +10,7 @@ plugins_file="$noctalia_dir/plugins.json"
 niri_dir="$config_home/niri"
 ghostty_dir="$config_home/ghostty"
 data_home=${XDG_DATA_HOME:-"$HOME/.local/share"}
+wallpapers_file=${XDG_CACHE_HOME:-"$HOME/.cache"}/noctalia/wallpapers.json
 
 say() { printf 'chiikawa: %s\n' "$*"; }
 warn() { printf 'chiikawa: warning: %s\n' "$*" >&2; }
@@ -27,10 +28,12 @@ done
 
 # Rerunning keeps the backup from before the first install.
 backup=$(cat "$state_dir/last-backup" 2>/dev/null || true)
+rerun=true
 if [ -z "$backup" ] || [ ! -d "$backup" ]; then
+  rerun=false
   backup="$state_dir/backup-$(date +%Y%m%d-%H%M%S)"
   mkdir -p "$backup"
-  for file in "$settings_file" "$plugins_file" "$niri_dir/config.kdl" \
+  for file in "$settings_file" "$plugins_file" "$wallpapers_file" "$niri_dir/config.kdl" \
               "$ghostty_dir/config" "$ghostty_dir/config.ghostty"; do
     if [ -f "$file" ]; then cp -p "$file" "$backup/$(basename "$file")"; fi
   done
@@ -74,9 +77,11 @@ stop_noctalia() {
 }
 stop_noctalia
 
-mkdir -p "$noctalia_dir/plugins"
+mkdir -p "$noctalia_dir/plugins" "$noctalia_dir/colorschemes"
 # Plugins import the theme as ../../chiikawa.
 link "$root/theme" "$noctalia_dir/chiikawa"
+# Light and night colors for Noctalia's own panels and widgets.
+link "$root/noctalia/colorschemes/Chiikawa" "$noctalia_dir/colorschemes/Chiikawa"
 plugin_ids=
 for plugin_dir in "$root"/plugins/*/; do
   plugin_id=$(basename "$plugin_dir")
@@ -88,10 +93,21 @@ done
 settings_tmp=$(mktemp "$noctalia_dir/.settings.XXXXXX")
 plugins_tmp=$(mktemp "$noctalia_dir/.plugins.XXXXXX")
 trap 'rm -f "$settings_tmp" "$plugins_tmp"' EXIT HUP INT TERM
-jq --slurpfile rice "$root/noctalia/settings.json" --arg lock "$root/scripts/lock-screen" '
-  . * $rice[0]
+# A rerun keeps the light/dark choice. The dark mode hook is only claimed if
+# it's free, and hooks are only switched on if no others would wake up.
+jq --slurpfile rice "$root/noctalia/settings.json" --arg lock "$root/scripts/lock-screen" \
+   --arg hook "\"$root/scripts/chiikawa-mode\" \$1" --argjson rerun "$rerun" '
+  .colorSchemes.darkMode as $dark
+  | (.hooks // {}) as $hooks
+  | . * $rice[0]
+  | if $rerun and $dark != null then .colorSchemes.darkMode = $dark else . end
   | if .sessionMenu.powerOptions then
       .sessionMenu.powerOptions |= map(if .action == "lock" then .command = $lock else . end)
+    else . end
+  | if ($hooks.darkModeChange // "") == "" or ($hooks.darkModeChange | contains("chiikawa-mode")) then
+      .hooks.darkModeChange = $hook
+      | if [$hooks | to_entries[] | select(.key != "enabled" and .key != "darkModeChange" and .value != "")] == []
+        then .hooks.enabled = true else . end
     else . end
 ' "$settings_file" > "$settings_tmp"
 # shellcheck disable=SC2086
@@ -102,6 +118,9 @@ chmod --reference="$plugins_file" "$plugins_tmp"
 mv -f "$settings_tmp" "$settings_file"
 mv -f "$plugins_tmp" "$plugins_file"
 trap - EXIT HUP INT TERM
+dark_mode=$(jq -r '.colorSchemes.darkMode == true' "$settings_file")
+jq -e '.hooks.enabled == true and (.hooks.darkModeChange | contains("chiikawa-mode"))' "$settings_file" >/dev/null \
+  || warn "niri and Dolphin won't follow dark mode; in Noctalia's hooks, enable hooks and set the dark mode hook to: \"$root/scripts/chiikawa-mode\" \$1"
 
 "$root/scripts/apply-noctalia-bar" "$root/noctalia/bar.json"
 say "linked the theme and $(echo "$plugin_ids" | wc -w) plugins, applied the bar"
@@ -138,6 +157,9 @@ fi
 if command -v ghostty >/dev/null 2>&1 || [ -d "$ghostty_dir" ]; then
   mkdir -p "$ghostty_dir"
   link "$root/ghostty/chiikawa.ghostty" "$ghostty_dir/chiikawa.ghostty"
+  mkdir -p "$ghostty_dir/themes"
+  link "$root/ghostty/themes/chiikawa" "$ghostty_dir/themes/chiikawa"
+  link "$root/ghostty/themes/chiikawa-night" "$ghostty_dir/themes/chiikawa-night"
   ghostty_config="$ghostty_dir/config.ghostty"
   [ -f "$ghostty_config" ] || [ ! -f "$ghostty_dir/config" ] || ghostty_config="$ghostty_dir/config"
   if ! grep -qsF chiikawa.ghostty "$ghostty_config"; then
@@ -149,13 +171,17 @@ fi
 
 mkdir -p "$data_home/color-schemes"
 link "$root/kde/Chiikawa.colors" "$data_home/color-schemes/Chiikawa.colors"
+link "$root/kde/ChiikawaNight.colors" "$data_home/color-schemes/ChiikawaNight.colors"
 if command -v kwriteconfig6 >/dev/null 2>&1; then
   if [ ! -f "$backup/dolphin-color-scheme" ]; then
     kreadconfig6 --file dolphinrc --group UiSettings --key ColorScheme > "$backup/dolphin-color-scheme"
   fi
   kwriteconfig6 --file dolphinrc --group UiSettings --key ColorScheme Chiikawa
-  say "Dolphin uses the Chiikawa color scheme (reopen its windows)"
+  say "Dolphin uses the Chiikawa color schemes (reopen its windows)"
 fi
+
+# Bring niri and Dolphin in line with the current mode.
+"$root/scripts/chiikawa-mode" "$dark_mode"
 
 if command -v fastfetch >/dev/null 2>&1; then
   mkdir -p "$config_home/fastfetch"
@@ -165,17 +191,32 @@ if command -v fastfetch >/dev/null 2>&1; then
 fi
 
 stop_noctalia
+
+# Noctalia keeps a light and a dark wallpaper per screen and swaps them with
+# dark mode. It only reads this file at startup, so write it while it's down.
+mkdir -p "$(dirname "$wallpapers_file")"
+[ -s "$wallpapers_file" ] || printf '{}\n' > "$wallpapers_file"
+wallpapers_tmp=$(mktemp "$(dirname "$wallpapers_file")/.wallpapers.XXXXXX")
+trap 'rm -f "$wallpapers_tmp"' EXIT HUP INT TERM
+# shellcheck disable=SC2046
+jq --arg light "$root/wallpaper/chiikawa.jpg" --arg dark "$root/wallpaper/rakko.jpg" --args '
+  .wallpapers = ((.wallpapers // {}) + ([$ARGS.positional[] | {(.): {}}] | add // {})
+    | map_values({light: $light, dark: $dark}))
+' $(niri msg --json outputs 2>/dev/null | jq -r 'keys[]' 2>/dev/null) < "$wallpapers_file" > "$wallpapers_tmp"
+mv -f "$wallpapers_tmp" "$wallpapers_file"
+trap - EXIT HUP INT TERM
+say "wallpapers: chiikawa in light mode, rakko in dark mode"
+
 if [ -n "${WAYLAND_DISPLAY:-}" ]; then
   setsid -f noctalia-shell -d >/dev/null 2>&1 < /dev/null
   for _ in $(seq 1 50); do
     noctalia_running && break
     sleep 0.2
   done
-  timeout 10 noctalia-shell ipc call wallpaper set "$root/wallpaper/chiikawa.jpg" all >/dev/null 2>&1 \
-    || warn "couldn't set the wallpaper; pick wallpaper/chiikawa.jpg in Noctalia"
   say "restarted Noctalia"
 else
-  say "not in a Wayland session; log into niri and set wallpaper/chiikawa.jpg as the wallpaper"
+  say "not in a Wayland session; log into niri to see it"
 fi
 
 say "done! reload Ghostty with Ctrl+Shift+, and try Mod+Space, Mod+O and Mod+Alt+L"
+say "dark mode is a tile in the control center, or: noctalia-shell ipc call darkMode toggle"

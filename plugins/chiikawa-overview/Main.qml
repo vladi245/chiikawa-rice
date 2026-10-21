@@ -117,7 +117,7 @@ Item {
           anchors.fill: parent
           sky: false
           grass: false
-          rainCount: 140
+          density: 140
           running: Theme.fx && root.overviewOpen
         }
       }

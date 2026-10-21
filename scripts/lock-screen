@@ -6,14 +6,23 @@ script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 root=$(dirname "$script_dir")
 cache_dir=${XDG_CACHE_HOME:-"$HOME/.cache"}/chiikawa-lock
 
+settings_file=${XDG_CONFIG_HOME:-"$HOME/.config"}/noctalia/settings.json
+dark=$(jq -r 'if .colorSchemes.darkMode then 1 else "" end' "$settings_file" 2>/dev/null || true)
+export CHIIKAWA_LOCK_DARK="$dark"
+
 screen=$(niri msg --json focused-output 2>/dev/null | jq -r '.name // empty' || true)
 wallpaper=$(timeout 3 noctalia-shell ipc call wallpaper get "${screen:-all}" 2>/dev/null || true)
-[ -n "$wallpaper" ] && [ -f "$wallpaper" ] || wallpaper="$root/wallpaper/chiikawa.jpg"
+if [ -z "$wallpaper" ] || [ ! -f "$wallpaper" ]; then
+  wallpaper="$root/wallpaper/chiikawa.jpg"
+  [ -z "$dark" ] || wallpaper="$root/wallpaper/rakko.jpg"
+fi
 
 mkdir -p "$cache_dir"
 cached="$cache_dir/background.jpg"
 sharp="$cache_dir/background-sharp.jpg"
-if [ ! -f "$cached" ] || [ ! -f "$sharp" ] || [ "$wallpaper" -nt "$cached" ]; then
+source_file="$cache_dir/source"
+if [ ! -f "$cached" ] || [ ! -f "$sharp" ] || [ "$wallpaper" -nt "$cached" ] \
+   || [ "$(cat "$source_file" 2>/dev/null)" != "$wallpaper" ]; then
   tmp=$(mktemp "$cache_dir/.background.XXXXXX.jpg")
   tmp_sharp=$(mktemp "$cache_dir/.sharp.XXXXXX.jpg")
   trap 'rm -f "$tmp" "$tmp_sharp"' EXIT HUP INT TERM
@@ -25,6 +34,7 @@ if [ ! -f "$cached" ] || [ ! -f "$sharp" ] || [ "$wallpaper" -nt "$cached" ]; th
   "$im" "$tmp_sharp" -blur 0x24 -quality 82 "$tmp"
   mv -f "$tmp" "$cached"
   mv -f "$tmp_sharp" "$sharp"
+  printf '%s\n' "$wallpaper" > "$source_file"
   trap - EXIT HUP INT TERM
 fi
 export CHIIKAWA_LOCK_BG="file://$cached"

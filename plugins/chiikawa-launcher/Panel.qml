@@ -137,7 +137,7 @@ Item {
 
   Scene {
     anchors.fill: parent
-    rainCount: 60
+    density: 60
   }
 
   Item {

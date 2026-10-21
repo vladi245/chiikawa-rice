@@ -1,0 +1,19 @@
+// Rakko night: copied over chiikawa-mode.kdl by scripts/chiikawa-mode.
+layout {
+    focus-ring {
+        active-gradient from="#f39ab0" to="#f2aa52" angle=135
+        inactive-color "#353d56"
+        urgent-color "#ef7a7a"
+    }
+
+    shadow {
+        color "#0a0c1480"
+    }
+}
+
+overview {
+    backdrop-color "#1d2130"
+    workspace-shadow {
+        color "#0a0c1499"
+    }
+}

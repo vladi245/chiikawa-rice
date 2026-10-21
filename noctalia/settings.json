@@ -1,7 +1,9 @@
 {
   "colorSchemes": {
     "darkMode": false,
-    "generationMethod": "tonal-spot"
+    "generationMethod": "tonal-spot",
+    "predefinedScheme": "Chiikawa",
+    "useWallpaperColors": false
   },
   "general": {
     "radiusRatio": 1.6,
@@ -15,5 +17,8 @@
     "fontDefault": "Nunito",
     "fontFixed": "Maple Mono NF",
     "panelBackgroundOpacity": 0.97
+  },
+  "wallpaper": {
+    "linkLightAndDarkWallpapers": false
   }
 }

@@ -8,13 +8,18 @@ Item {
   id: view
   required property var controller
 
-  readonly property color paper: "#fcf6e7"
-  readonly property color line: "#4b302b"
-  readonly property color dim: "#9c8273"
-  readonly property color pink: "#e3708b"
-  readonly property color blush: "#f6b4c1"
-  readonly property color grass: "#c3e2a6"
-  readonly property color errorColor: "#d65a5a"
+  // Set by scripts/lock-screen from Noctalia's dark mode.
+  readonly property bool dark: Quickshell.env("CHIIKAWA_LOCK_DARK") === "1"
+  readonly property color paper: dark ? "#1d2130" : "#fcf6e7"
+  readonly property color field: dark ? "#2a3047" : "#fffdf8"
+  readonly property color line: dark ? "#efdfc4" : "#4b302b"
+  readonly property color shadow: dark ? "#0a0c14" : "#4b302b"
+  readonly property color dim: dark ? "#9aa0bb" : "#9c8273"
+  readonly property color pink: dark ? "#f39ab0" : "#e3708b"
+  readonly property color honey: dark ? "#f2aa52" : "#e09a2f"
+  readonly property color blush: dark ? "#c97b93" : "#f6b4c1"
+  readonly property color grass: dark ? "#3e5a52" : "#c3e2a6"
+  readonly property color errorColor: dark ? "#ef7a7a" : "#d65a5a"
   readonly property string display: "Nunito"
   readonly property string mono: "Maple Mono NF"
 
@@ -110,7 +115,7 @@ Item {
       readonly property real seed: Math.abs(Math.sin(index * 12.9898) * 43758.5453) % 1
       readonly property real seed2: Math.abs(Math.sin(index * 78.233) * 12543.123) % 1
       text: index % 3 === 0 ? "✦" : (index % 3 === 1 ? "♥" : "•")
-      color: index % 2 ? view.pink : "#e09a2f"
+      color: index % 2 ? view.pink : view.honey
       font.pixelSize: 10 + seed2 * 10
       x: seed * view.width
       y: view.height
@@ -205,7 +210,7 @@ Item {
       width: card.width
       height: card.height
       radius: card.radius
-      color: Qt.alpha(view.line, 0.22)
+      color: Qt.alpha(view.shadow, view.dark ? 0.45 : 0.22)
     }
 
     Rectangle {
@@ -327,7 +332,7 @@ Item {
           width: 280
           height: 46
           radius: height / 2
-          color: "#fffdf8"
+          color: view.field
           border.width: 2.5
           border.color: view.error ? view.errorColor : (passwordInput.activeFocus ? view.pink : view.line)
           Behavior on border.color {

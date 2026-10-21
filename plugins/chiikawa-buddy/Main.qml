@@ -316,7 +316,7 @@ Item {
       radius: height / 2
       x: pet.px - width / 2
       y: pet.ground - height / 2
-      color: Qt.alpha(Theme.line, 0.18 * s)
+      color: Qt.alpha(Theme.shadow, (Theme.dark ? 0.4 : 0.18) * s)
     }
 
     Item {

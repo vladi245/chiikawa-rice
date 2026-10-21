@@ -8,6 +8,7 @@ noctalia_dir="$config_home/noctalia"
 niri_dir="$config_home/niri"
 ghostty_dir="$config_home/ghostty"
 data_home=${XDG_DATA_HOME:-"$HOME/.local/share"}
+wallpapers_file=${XDG_CACHE_HOME:-"$HOME/.cache"}/noctalia/wallpapers.json
 
 say() { printf 'chiikawa: %s\n' "$*"; }
 
@@ -35,10 +36,12 @@ stop_noctalia
 for name in settings.json plugins.json; do
   [ -f "$backup/$name" ] && cp -p "$backup/$name" "$noctalia_dir/$name"
 done
+[ -f "$backup/wallpapers.json" ] && cp -p "$backup/wallpapers.json" "$wallpapers_file"
 
-for path in "$noctalia_dir/chiikawa" "$noctalia_dir"/plugins/* \
+for path in "$noctalia_dir/chiikawa" "$noctalia_dir/colorschemes/Chiikawa" "$noctalia_dir"/plugins/* \
             "$niri_dir/chiikawa.kdl" "$ghostty_dir/chiikawa.ghostty" \
-            "$data_home/color-schemes/Chiikawa.colors"; do
+            "$ghostty_dir/themes/chiikawa" "$ghostty_dir/themes/chiikawa-night" \
+            "$data_home/color-schemes/Chiikawa.colors" "$data_home/color-schemes/ChiikawaNight.colors"; do
   [ -L "$path" ] || continue
   case $(readlink "$path") in "$root"/*) rm -f "$path" ;; esac
 done
@@ -53,7 +56,7 @@ if [ -f "$backup/moved" ]; then
   done < "$backup/moved"
 fi
 
-rm -f "$niri_dir/chiikawa-binds.kdl"
+rm -f "$niri_dir/chiikawa-binds.kdl" "$niri_dir/chiikawa-mode.kdl"
 rm -f "$config_home/fastfetch/chiikawa.jsonc"
 [ -f "$niri_dir/config.kdl" ] && sed -i '/^\/\/ Chiikawa rice (/d; /^include optional=true "chiikawa\(-binds\)\?\.kdl"$/d' "$niri_dir/config.kdl"
 for config in "$ghostty_dir/config.ghostty" "$ghostty_dir/config"; do
