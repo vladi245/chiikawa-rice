@@ -17,15 +17,19 @@ Chiikawa, Hachiware, Usagi and Momonga living on your desktop.
 <details>
 <summary>More screenshots</summary>
 
+| Light | Dark |
+| --- | --- |
+| ![Control center](docs/screenshots/control-center.png) | ![Control center in dark mode](docs/screenshots/control-center-dark.png) |
+| ![Launcher](docs/screenshots/launcher.png) | ![Launcher in dark mode](docs/screenshots/launcher-dark.png) |
+| ![Lock screen](docs/screenshots/lock.png) | ![Lock screen in dark mode](docs/screenshots/lock-dark.png) |
+
 | | | |
 | --- | --- | --- |
-| ![Control center](docs/screenshots/control-center.png) | ![Calendar](docs/screenshots/calendar.png) | ![Sound panel](docs/screenshots/sound.png) |
-| ![Wi-Fi panel](docs/screenshots/wifi.png) | ![Brightness panel](docs/screenshots/brightness.png) | ![Cast picker](docs/screenshots/cast-picker.png) |
-| ![Launcher](docs/screenshots/launcher.png) | ![Dolphin](docs/screenshots/dolphin.png) | ![Dolphin details view](docs/screenshots/dolphin-details.png) |
-| ![Control center in dark mode](docs/screenshots/control-center-dark.png) | ![Launcher in dark mode](docs/screenshots/launcher-dark.png) | |
+| ![Calendar](docs/screenshots/calendar.png) | ![Sound panel](docs/screenshots/sound.png) | ![Wi-Fi panel](docs/screenshots/wifi.png) |
+| ![Brightness panel](docs/screenshots/brightness.png) | ![Cast picker](docs/screenshots/cast-picker.png) | ![Dolphin](docs/screenshots/dolphin.png) |
 
+![Dolphin details view](docs/screenshots/dolphin-details.png)
 ![Ghostty and Neovim](docs/screenshots/terminal.png)
-![Lock screen](docs/screenshots/lock.png)
 
 </details>
 
