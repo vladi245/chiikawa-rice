@@ -7,6 +7,12 @@ Chiikawa, Hachiware, Usagi and Momonga living on your desktop.
 | Light | Dark |
 | --- | --- |
 | ![The chiikawa desktop](docs/screenshots/desktop.png) | ![The rakko night desktop](docs/screenshots/desktop-dark.png) |
+| ![Lock screen](docs/screenshots/lock.png) | ![Lock screen in dark mode](docs/screenshots/lock-dark.png) |
+| ![Launcher](docs/screenshots/launcher.png) | ![Launcher in dark mode](docs/screenshots/launcher-dark.png) |
+| ![Control center](docs/screenshots/control-center.png) | ![Control center in dark mode](docs/screenshots/control-center-dark.png) |
+
+<details>
+<summary>In motion</summary>
 
 | | |
 | --- | --- |
@@ -14,14 +20,10 @@ Chiikawa, Hachiware, Usagi and Momonga living on your desktop.
 | ![Launcher](docs/gifs/launcher.gif) | ![Panels](docs/gifs/panels.gif) |
 | ![Overview](docs/gifs/overview.gif) | ![Notifications](docs/gifs/notifications.gif) |
 
+</details>
+
 <details>
 <summary>More screenshots</summary>
-
-| Light | Dark |
-| --- | --- |
-| ![Control center](docs/screenshots/control-center.png) | ![Control center in dark mode](docs/screenshots/control-center-dark.png) |
-| ![Launcher](docs/screenshots/launcher.png) | ![Launcher in dark mode](docs/screenshots/launcher-dark.png) |
-| ![Lock screen](docs/screenshots/lock.png) | ![Lock screen in dark mode](docs/screenshots/lock-dark.png) |
 
 | | | |
 | --- | --- | --- |
